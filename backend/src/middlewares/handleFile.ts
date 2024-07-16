@@ -1,0 +1,31 @@
+import multer, { diskStorage } from 'multer';
+import { existsSync, mkdirSync } from 'fs';
+import { extname } from 'path';
+
+const multerOptions = multer({
+	limits: {
+		fileSize: 50000000
+	},
+	fileFilter: (req: any, file: Express.Multer.File, cb: any) => {
+		if (file.mimetype.match(/\/(jpg|jpeg|png)$/)) {
+			cb(null, true);
+		} else {
+			cb('Invalid  image type', false);
+		}
+	},
+	storage: diskStorage({
+		destination: (req: any, file: Express.Multer.File, cb: any) => {
+			const uploadPath = './public/images';
+			if (!existsSync(uploadPath)) {
+				mkdirSync(uploadPath);
+			} else {
+				cb(null, uploadPath);
+			}
+		},
+		filename: (req: any, file: Express.Multer.File, cb: any) => {
+			cb(null, `${crypto.randomUUID()}${extname(file.originalname)}`);
+		}
+	})
+});
+
+export default multerOptions;
