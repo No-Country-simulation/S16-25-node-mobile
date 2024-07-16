@@ -41,3 +41,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+#nunca subir los archivos generados
+#dart pub run build_runner build
+*.freezed.dart
+*.g.dart
