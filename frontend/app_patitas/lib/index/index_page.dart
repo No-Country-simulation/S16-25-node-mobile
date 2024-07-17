@@ -1,4 +1,7 @@
+import 'package:app_patitas/config/constantes/const.dart';
+import 'package:app_patitas/config/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class IndexPage extends StatelessWidget {
   const IndexPage({super.key});
@@ -18,7 +21,7 @@ class IndexPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Colors.orange,
+                color: Const.primaryColorTextOrange,
               ),
             ),
             const SizedBox(height: 20),
@@ -30,8 +33,8 @@ class IndexPage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.orange,
+                foregroundColor: Const.colorTextWhite,
+                backgroundColor: Const.primaryColorTextOrange,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                 shape: RoundedRectangleBorder(
@@ -44,14 +47,14 @@ class IndexPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               onPressed: () {
-                // Navigate to Register or Login
+                Get.offAllNamed(Routes.REGISTERANDLOGIN);
               },
             ),
             const SizedBox(height: 20),
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black,
-                backgroundColor: Colors.white,
+                foregroundColor: Const.colorTextBlack,
+                backgroundColor: Const.colorTextWhite,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                 shape: RoundedRectangleBorder(
@@ -77,18 +80,19 @@ class IndexPage extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Divider(
-                    color: Colors.orange,
+                    color: Const.primaryColorTextOrange,
                     height: 36,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text('o',
-                      style: TextStyle(fontSize: 16, color: Colors.orange)),
+                      style: TextStyle(
+                          fontSize: 16, color: Const.primaryColorTextOrange)),
                 ),
                 Expanded(
                   child: Divider(
-                    color: Colors.orange,
+                    color: Const.primaryColorTextOrange,
                     height: 36,
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:app_patitas/auth/pages/register_and_login_page.dart';
 import 'package:app_patitas/index/index_page.dart';
 import 'package:app_patitas/onboarding/onepage.dart';
 import 'package:app_patitas/splash/splash_page.dart';
@@ -11,8 +12,7 @@ abstract class Routes {
 
   //
   static const HOME = '/home';
-  static const LOGIN = '/login';
-  static const SIGNUP = '/signup';
+  static const REGISTERANDLOGIN = '/registerandlogin';
 }
 
 class AppRouter {
@@ -21,6 +21,11 @@ class AppRouter {
       GetPage(name: Routes.INITIAL, page: () => OnePage()),
       GetPage(name: Routes.ONBOARDING, page: () => OnePage()),
       GetPage(name: Routes.INDEX, page: () => IndexPage()),
+
+      //
+
+      GetPage(
+          name: Routes.REGISTERANDLOGIN, page: () => RegisterAndLoginPage()),
     ];
   }
 }
