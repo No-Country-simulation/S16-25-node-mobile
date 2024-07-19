@@ -24,7 +24,8 @@ const animalSchema = new mongoose.Schema<Animal>(
 		},
 		especie: {
 			type: String,
-			required: true
+			enum: ['Perro', 'Gato', 'Reptil','Ave','Otros'],
+			default: 'Perro'
 		},
 		edad: {
 			type: Number,

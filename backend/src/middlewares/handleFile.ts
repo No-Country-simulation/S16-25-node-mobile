@@ -23,7 +23,8 @@ const multerOptions = multer({
 			}
 		},
 		filename: (req: any, file: Express.Multer.File, cb: any) => {
-			cb(null, `${crypto.randomUUID()}${extname(file.originalname)}`);
+			//${crypto.randomUUID()} Arreglar la version de node para usar randomUUID
+			cb(null, `${Date.now()}${extname(file.originalname)}`);
 		}
 	})
 });
