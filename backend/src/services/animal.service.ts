@@ -1,4 +1,8 @@
-import { AnimalModel, AnimalRequest } from '../models/animal.model';
+import {
+	AnimalModel,
+	createAnimalRequest,
+	updateAnimalRequest
+} from '../models/animal.model';
 import { CustomError } from '../utils/custom.error';
 import { handleUpload } from '../utils/imageUpload';
 
@@ -6,35 +10,75 @@ export class AnimalService {
 	constructor() {}
 
 	async getAnimals() {
-		try {
-			const [total, animals] = await Promise.all([
-				AnimalModel.countDocuments(),
-				AnimalModel.find()
-			]);
+		const [total, animals] = await Promise.all([
+			AnimalModel.countDocuments(),
+			AnimalModel.find()
+		]);
 
-			return { total, animals };
-		} catch (error) {
-			throw CustomError.internalServer();
-		}
+		return { total, animals };
 	}
 
-	async create(animal: AnimalRequest) {
-		const animalExists = await AnimalModel.findOne({
-			nombre: animal.nombre
-		});
-		const imageUrl = await handleUpload(animal.image);
+	async create(data: createAnimalRequest) {
+		const imageUrl = await handleUpload(data.image);
 
-		if (animalExists) throw CustomError.badRequest('Animal already exists');
+		const tempAnimal = { ...data, image: imageUrl };
 
-		try {
-			const tempAnimal = { ...animal, image: imageUrl };
+		const saveAnimal = new AnimalModel(tempAnimal);
+		await saveAnimal.save();
 
-			const saveAnimal = new AnimalModel(tempAnimal);
-			await saveAnimal.save();
+		return saveAnimal;
+	}
 
-			return saveAnimal;
-		} catch (error) {
-			throw CustomError.internalServer();
+	async getById(id: string) {
+		const findAnimal = await AnimalModel.findById(id);
+
+		if (!findAnimal) {
+			throw CustomError.notFound('Animal no encontrado');
 		}
+
+		return findAnimal;
+	}
+
+	async update(id: string, data: updateAnimalRequest) {
+		const animalExists = await AnimalModel.findById(id);
+
+		if (!animalExists) {
+			throw CustomError.notFound('El animal no existe');
+		}
+
+		if (data.image) {
+			const imageUrl = await handleUpload(data.image);
+
+			await AnimalModel.findByIdAndUpdate(id, {
+				nombre: data.nombre,
+				especie: data.especie,
+				edad: data.edad,
+				peso: data.peso,
+				image: imageUrl,
+				estado: data.estado
+			});
+		} else {
+			await AnimalModel.findByIdAndUpdate(id, {
+				nombre: data.nombre,
+				especie: data.especie,
+				edad: data.edad,
+				peso: data.peso,
+				estado: data.estado
+			});
+		}
+
+		const animal = await AnimalModel.findById(id);
+
+		return animal;
+	}
+
+	async delete(id: string) {
+		const findAnimal = await AnimalModel.findById(id);
+
+		if (!findAnimal) {
+			throw CustomError.notFound('Animal no encontrado');
+		}
+
+		await AnimalModel.deleteOne(findAnimal.id);
 	}
 }
