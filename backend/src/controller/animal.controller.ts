@@ -7,6 +7,7 @@ export class AnimalController {
 
 	private handleError = (error: unknown, res: Response) => {
 		if (error instanceof CustomError) {
+			console.log(error);
 			return res.status(error.statusCode).json({ error: error.message });
 		} else {
 			console.log(`${error}`);
@@ -14,7 +15,7 @@ export class AnimalController {
 		}
 	};
 
-	get = (req: Request, res: Response) => {
+	getAll = (req: Request, res: Response) => {
 		this.animalService
 			.getAnimals()
 			.then(animals => res.json(animals))
@@ -27,6 +28,15 @@ export class AnimalController {
 		this.animalService
 			.create(body)
 			.then(animal => res.status(201).json(animal))
+			.catch(err => this.handleError(err, res));
+	};
+
+	getById = (req: Request, res: Response) => {
+		const { id } = req.params;
+
+		this.animalService
+			.getById(id)
+			.then(animal => res.json(animal))
 			.catch(err => this.handleError(err, res));
 	};
 }

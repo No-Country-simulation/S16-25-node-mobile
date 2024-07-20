@@ -37,4 +37,16 @@ export class AnimalService {
 			throw CustomError.internalServer();
 		}
 	}
+
+	async getById(id: string) {
+		try {
+			const findAnimal = await AnimalModel.findById(id);
+
+			if (!findAnimal) throw CustomError.notFound('Animal no encontrado');
+
+			return findAnimal;
+		} catch (error) {
+			throw CustomError.internalServer();
+		}
+	}
 }
