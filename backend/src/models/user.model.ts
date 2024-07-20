@@ -17,12 +17,13 @@ export interface User extends Document {
     donaciones: ObjectId[];
     denuncias: ObjectId[];
     calificaciones: ObjectId[];
+    token:string;
 }
 
 // Defino el tipo UserRequest para manejar las solicitudes HTTP y no tener problemas con la imagen de perfil
 export type UserRequest = Pick<
     User,
-    'nombre' | 'fechaDeNacimiento' | 'rol' | 'telefono' | 'email' | 'password' | 'poseeAnimales' | 'conviveMenores' | 'patio' | 'dimensiones' | 'direccion'
+    'nombre' | 'fechaDeNacimiento' | 'rol' | 'telefono' | 'email' | 'password' | 'poseeAnimales' | 'conviveMenores' | 'patio' | 'dimensiones' | 'direccion' | 'token'
 > & {
     imagenPerfil: Express.Multer.File;
 };
@@ -103,7 +104,10 @@ const userSchema = new mongoose.Schema<User>({
             type: mongoose.Schema.Types.ObjectId,
                 ref: 'Calificacion'
         }
-    ]
+    ],
+    token:{
+        type: String
+    }
 },{
     timestamps: true
 });
