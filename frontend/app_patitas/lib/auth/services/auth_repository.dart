@@ -26,6 +26,7 @@ class AuthRepository {
         'name': user.name,
         'email': user.email,
         'password': user.password,
+        'document': user.document,
       },
     );
     return response.data;
