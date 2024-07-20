@@ -19,14 +19,14 @@ export interface User extends Document {
     calificaciones: ObjectId[];
 }
 
-// Defino UserReqest para manejar las solicitudes HTTP y no tener problemas con la imagen de perfil
+// Defino el tipo UserRequest para manejar las solicitudes HTTP y no tener problemas con la imagen de perfil
 export type UserRequest = Pick<
     User,
     'nombre' | 'fechaDeNacimiento' | 'rol' | 'telefono' | 'email' | 'password' | 'poseeAnimales' | 'conviveMenores' | 'patio' | 'dimensiones' | 'direccion'
 > & {
     imagenPerfil: Express.Multer.File;
 };
-//Para editar el usuario
+//Para manejar la edicion del usuario
 export type UpdateUser = Partial<UserRequest>
 
 // Declaro el esquema del modelo de Mongo
