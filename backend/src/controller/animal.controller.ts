@@ -7,7 +7,6 @@ export class AnimalController {
 
 	private handleError = (error: unknown, res: Response) => {
 		if (error instanceof CustomError) {
-			console.log(error);
 			return res.status(error.statusCode).json({ error: error.message });
 		} else {
 			console.log(`${error}`);
@@ -19,7 +18,7 @@ export class AnimalController {
 		this.animalService
 			.getAnimals()
 			.then(animals => res.json(animals))
-			.catch(err => this.handleError(err, res));
+			.catch(error => this.handleError(error, res));
 	};
 
 	create = (req: Request, res: Response) => {
@@ -28,7 +27,7 @@ export class AnimalController {
 		this.animalService
 			.create(body)
 			.then(animal => res.status(201).json(animal))
-			.catch(err => this.handleError(err, res));
+			.catch(error => this.handleError(error, res));
 	};
 
 	getById = (req: Request, res: Response) => {
@@ -37,6 +36,26 @@ export class AnimalController {
 		this.animalService
 			.getById(id)
 			.then(animal => res.json(animal))
-			.catch(err => this.handleError(err, res));
+			.catch(error => this.handleError(error, res));
+	};
+
+	update = (req: Request, res: Response) => {
+		const { id } = req.params;
+		const { body } = req;
+		body.image = req.file;
+
+		this.animalService
+			.update(id, body)
+			.then(animal => res.status(202).json(animal))
+			.catch(error => this.handleError(error, res));
+	};
+
+	delete = (req: Request, res: Response) => {
+		const { id } = req.params;
+
+		this.animalService
+			.delete(id)
+			.then(() => res.status(202).json({ message: 'Animal Eliminado' }))
+			.catch(error => this.handleError(error, res));
 	};
 }

@@ -8,12 +8,14 @@ export interface Animal extends Document {
 	estado: string;
 }
 
-export type AnimalRequest = Pick<
+export type createAnimalRequest = Pick<
 	Animal,
 	'nombre' | 'especie' | 'edad' | 'peso' | 'estado'
 > & {
 	image: Express.Multer.File;
 };
+
+export type updateAnimalRequest = Partial<createAnimalRequest>;
 
 const animalSchema = new mongoose.Schema<Animal>(
 	{
@@ -24,7 +26,7 @@ const animalSchema = new mongoose.Schema<Animal>(
 		},
 		especie: {
 			type: String,
-			enum: ['Perro', 'Gato', 'Reptil','Ave','Otros'],
+			enum: ['Perro', 'Gato', 'Reptil', 'Ave', 'Otros'],
 			default: 'Perro'
 		},
 		edad: {

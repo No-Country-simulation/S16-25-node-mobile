@@ -25,6 +25,20 @@ export const bodyAnimalValidator = [
 	body('estado').optional().isIn(['Activo', 'Pedido', 'Adoptado'])
 ];
 
+export const updateBodyAnimalValidator = [
+	body('nombre')
+		.optional()
+		.isString()
+		.withMessage('El campo nombre debe ser un string'),
+	body('especie')
+		.optional()
+		.isString()
+		.withMessage('El campo especie debe ser un string'),
+	body('edad').optional().isInt().withMessage('El campo edad es un entero'),
+	body('peso').optional().isInt().withMessage('El campo peso es un enter'),
+	body('estado').optional().isIn(['Activo', 'Pedido', 'Adoptado'])
+];
+
 export const isMongoId = [
 	param('id')
 		.isMongoId()
