@@ -1,41 +1,49 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document, ObjectId } from "mongoose";
 
 export interface User extends Document {
     nombre: string;
     fechaDeNacimiento: string;
-    Rol: string;
+    rol: string;
     telefono: number;
     email: string;
     password: string;
     poseeAnimales: boolean;
-    conviveNiños: boolean;
+    conviveMenores: boolean;
     patio: boolean;
     dimensiones: number;
     direccion: string;
     imagenPerfil: string;
-    animales: Animal
-    donaciones: Donacion
-    denuncias: Denuncias
-    calificaciones: Calificación
+    animales: ObjectId[];
+    donaciones: ObjectId[];
+    denuncias: ObjectId[];
+    calificaciones: ObjectId[];
 }
-//const mongoose = require('mongoose'); // Erase if already required
 
+// Defino UserReqest para manejar las solicitudes HTTP y no tener problemas con la imagen de perfil
+export type UserRequest = Pick<
+    User,
+    'nombre' | 'fechaDeNacimiento' | 'rol' | 'telefono' | 'email' | 'password' | 'poseeAnimales' | 'conviveMenores' | 'patio' | 'dimensiones' | 'direccion'
+> & {
+    imagenPerfil: Express.Multer.File;
+};
+//Para editar el usuario
+export type UpdateUser = Partial<UserRequest>
 
-// Declare the Schema of the Mongo model
-var userSchema = new mongoose.Schema({
+// Declaro el esquema del modelo de Mongo
+const userSchema = new mongoose.Schema<User>({
     nombre: {
         type: String,
         required: true,
-        unique: true,
+        //unique: true,
         index: true,
     },
     rol: {
         type: String,
         enum: ['Admin', 'User', 'Gerente'],
-        default: 'user'
+        default: 'User'
     }, 
     telefono: {
-        type: String,
+        type: Number,
         required: true,
         unique: true,
     },
@@ -46,13 +54,13 @@ var userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
+        //required: true,
     },
     poseeAnimales: {
         type: Boolean,
         default: false,
     },
-    conviveNiños: {
+    conviveMenores: {
         type: Boolean,
         default: false,
     },
@@ -66,7 +74,7 @@ var userSchema = new mongoose.Schema({
     },
     direccion: {
         type: String,
-        requierd: true,
+        required: true,
         unique: true,
     },
     imagenPerfil:{
@@ -96,7 +104,18 @@ var userSchema = new mongoose.Schema({
                 ref: 'Calificacion'
         }
     ]
+},{
+    timestamps: true
 });
+// Configuro el JSON para omitir el '_id'
+userSchema.set("toJSON",{
+    virtuals: true,
+	versionKey: false,
+	transform: function (doc, ret, options) {
+		delete ret._id;
+	}
+})
+//pendiente hashear contraseña
 
-//Export the model
-module.exports = mongoose.model('User', userSchema);
+//Exporto el modelo
+export const UserModel = mongoose.model('User', userSchema);
