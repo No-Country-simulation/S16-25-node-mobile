@@ -2,7 +2,7 @@ import mongoose, { Document, ObjectId } from 'mongoose';
 
 interface Refugio extends Document {
 	nombre: string;
-	imagen: string;
+	image: string;
 	correo: string;
 	telefono: string;
 	gerente: ObjectId;
@@ -10,14 +10,22 @@ interface Refugio extends Document {
 	publicaciones: ObjectId[];
 }
 
+export type RefugioRequest = Pick<
+	Refugio,
+	'nombre' | 'correo' | 'telefono' | 'gerente'
+> & { image: Express.Multer.File };
+
+export type UpdateRefugioRequest = Partial<RefugioRequest>;
+
 const refugioSchema = new mongoose.Schema<Refugio>(
 	{
 		nombre: {
 			type: String,
 			required: true
 		},
-		imagen: {
-			type: String
+		image: {
+			type: String,
+			required: true
 		},
 		correo: {
 			type: String,

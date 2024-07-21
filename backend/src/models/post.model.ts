@@ -3,10 +3,19 @@ import mongoose, { Document, ObjectId } from 'mongoose';
 interface Post extends Document {
 	titulo: string;
 	texto: string;
-	imagen: string;
+	image: string;
 	status: string;
 	refugio: ObjectId;
 }
+
+export type PostRequest = Pick<
+	Post,
+	'titulo' | 'texto' | 'status' | 'refugio'
+> & {
+	image: Express.Multer.File;
+};
+
+export type UpdatePostRequest = Partial<PostRequest>;
 
 const postSchema = new mongoose.Schema<Post>(
 	{
@@ -18,8 +27,9 @@ const postSchema = new mongoose.Schema<Post>(
 			type: String,
 			required: true
 		},
-		imagen: {
-			type: String
+		image: {
+			type: String,
+			required: true
 		},
 		status: {
 			type: String,

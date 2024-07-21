@@ -22,8 +22,7 @@ const animalSchema = new mongoose.Schema<Animal>(
 	{
 		nombre: {
 			type: String,
-			required: true,
-			unique: true
+			required: true
 		},
 		especie: {
 			type: String,

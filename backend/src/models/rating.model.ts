@@ -3,9 +3,12 @@ import mongoose, { Document, ObjectId } from 'mongoose';
 interface Rating extends Document {
 	rate: number;
 	texto: string;
-	user: ObjectId;
-	refugio: ObjectId;
+	user?: ObjectId;
+	refugio?: ObjectId;
 }
+
+export type RatingRequest = Pick<Rating, 'rate' | 'texto' | 'user' | 'refugio'>;
+export type UpdateRatingRequest = Partial<RatingRequest>;
 
 const ratingSchema = new mongoose.Schema<Rating>({
 	rate: {
