@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { envs } from "../config/envs";
 import { User, UserModel } from "../models/user.model";
 import { CustomError } from "../utils/custom.error";
+import { handleUpload } from "../utils/imageUpload";
 
 const JWT_SECRET = envs.JWT_SEED;
 
@@ -24,7 +25,12 @@ export class AuthService {
         const hashedPassword = await bcrypt.hash(data.password, 10);
         data.password = hashedPassword;
 
-        const user = new UserModel(data);
+        const imageUrl = await handleUpload(data.image);
+
+		const tempUser = { ...data, imagenPerfil: imageUrl };
+        console.log(data)
+
+        const user = new UserModel(tempUser);
         await user.save();
         
         const token = jwt.sign({id:user.id, email: user.email, rol: user.rol }, JWT_SECRET, { expiresIn: '1h' });

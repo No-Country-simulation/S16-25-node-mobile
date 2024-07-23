@@ -29,6 +29,7 @@ export class AuthController {
 
     register = (req: any, res: Response) => {
         const { body } = req;
+        body.image = req.file;
         this.authService
             .register(body)
             .then(user => res.status(201).json(user))

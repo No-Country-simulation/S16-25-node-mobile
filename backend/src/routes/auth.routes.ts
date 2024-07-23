@@ -3,6 +3,7 @@ import { AuthService } from "../services/auth.service";
 import { AuthController } from "../controller/auth.controller";
 import { loginUserValidator, registerUserValidator } from "../middlewares/validators";
 import { HandleInputErrors } from "../middlewares/validateInput";
+import upload from '../middlewares/handleFile';
 
 export class AuthRoutes {
 
@@ -13,7 +14,7 @@ export class AuthRoutes {
         const controller = new AuthController(authService);
 
         router.post('/login', loginUserValidator, HandleInputErrors, controller.login);
-        router.post('/register', registerUserValidator, HandleInputErrors, controller.register);
+        router.post('/register', upload.single('imagenPerfil'), registerUserValidator, HandleInputErrors, controller.register);
         return router;
     }
 
