@@ -7,6 +7,8 @@ export interface User extends Document {
     telefono: number;
     email: string;
     password: string;
+    tipoDocumento: string;
+    documento: number;
     poseeAnimales: boolean;
     conviveMenores: boolean;
     patio: boolean;
@@ -56,6 +58,16 @@ const userSchema = new mongoose.Schema<User>({
     password: {
         type: String,
         //required: true,
+    },
+    tipoDocumento: {
+        type: String,
+        enum: ['DNI', 'Pasaporte'],
+        default: 'DNI'
+    },
+    documento: {
+        type: Number,
+        required: true,
+        unique: true,
     },
     poseeAnimales: {
         type: Boolean,
@@ -119,7 +131,6 @@ userSchema.set("toJSON",{
 		delete ret._id;
 	}
 })
-//pendiente hashear contraseña
 
 //Exporto el modelo
 export const UserModel = mongoose.model('User', userSchema);
