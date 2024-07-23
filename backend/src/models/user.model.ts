@@ -27,7 +27,7 @@ export type UserRequest = Pick<
     User,
     'nombre' | 'fechaDeNacimiento' | 'rol' | 'telefono' | 'email' | 'password' | 'poseeAnimales' | 'conviveMenores' | 'patio' | 'dimensiones' | 'direccion' | 'token'
 > & {
-    imagenPerfil: Express.Multer.File;
+    image: Express.Multer.File;
 };
 //Para manejar la edicion del usuario
 export type UpdateUser = Partial<UserRequest>
@@ -116,10 +116,10 @@ const userSchema = new mongoose.Schema<User>({
             type: mongoose.Schema.Types.ObjectId,
                 ref: 'Calificacion'
         }
-    ],
+    ]/* ,
     token:{
         type: String
-    }
+    } */
 },{
     timestamps: true
 });

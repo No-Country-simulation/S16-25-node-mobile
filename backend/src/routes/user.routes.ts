@@ -3,6 +3,7 @@ import { UserService } from "../services/user.service";
 import { UserController } from "../controller/user.controller";
 import { updateUserValidator } from "../middlewares/validators";
 import { HandleInputErrors } from "../middlewares/validateInput";
+import upload from '../middlewares/handleFile';
 
 export class UserRouter {
 
@@ -15,7 +16,7 @@ export class UserRouter {
 //TODO: agregar ruta para atualziar solo contraseña
         router.get('/', controller.getAll);
         router.get('/:id', controller.getById);
-        router.put('/:id', updateUserValidator, HandleInputErrors, controller.update);
+        router.put('/:id',upload.single('imagenPerfil'), updateUserValidator, HandleInputErrors, controller.update);
         router.delete('/:id', controller.delete);
 
         return router;

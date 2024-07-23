@@ -35,11 +35,20 @@ export class UserService {
 		if (data.password) {
 			data.password = await bcrypt.hash(data.password, 10);
 		}
+console.log(data)
+		if (data.image) {
+			const imageUrl = await handleUpload(data.image);
 
-		if (data.imagenPerfil) {
-			const imageUrl = await handleUpload(data.imagenPerfil);
+			await UserModel.findByIdAndUpdate(id, {
+				...data,
+				imagenPerfil: imageUrl
+			});
 
 			/* data.imagenPerfil = imageUrl; */
+		}else {
+			await UserModel.findByIdAndUpdate(id, {
+				...data
+			});
 		}
 
 		await UserModel.findByIdAndUpdate(id, data);
