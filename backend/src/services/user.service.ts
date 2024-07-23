@@ -14,33 +14,17 @@ export class UserService {
 
 		return { total, users };
     }
-
-    async create(data: UserRequest) {
-		const hashedPassword = await bcrypt.hash(data.password, 10);
-		const imageUrl = await handleUpload(data.imagenPerfil);
-
-		const tempUser = {
-			...data,
-			password: hashedPassword,
-			imagenPerfil: imageUrl
-		};
-
-		const saveUser = new UserModel(tempUser);
-		await saveUser.save();
-
-		return saveUser;
-	}
-
+	
 	async getById(id: string) {
 		const findUser = await UserModel.findById(id);
-
+		
 		if (!findUser) {
 			throw CustomError.notFound('Usuario no encontrado');
 		}
-
+		
 		return findUser;
 	}
-
+	
 	async update(id: string, data: UpdateUser) {
 		const userExists = await UserModel.findById(id);
 
@@ -74,18 +58,5 @@ export class UserService {
 
 		await UserModel.deleteOne({ _id: findUser.id });
 	}
-    
-    /* async function getMoreData(data) {
-      return Promise.resolve(data + 'more data');
-    }
-    
-    async function getAll() {
-      const data = await getData();
-      const moreData = await getMoreData(data);
-      return `All the data: ${data}, ${moreData}`;
-    }
-    
-    getAll().then((all) => {
-      console.log('all the data')
-    }) */
+
 }
