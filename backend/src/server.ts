@@ -1,4 +1,6 @@
 import express, { Router } from 'express';
+import passport from 'passport';
+import './config/passport-config';
 
 interface Options {
 	port: number;
@@ -20,11 +22,12 @@ export class Server {
 	async start() {
 		/* Middlewares */
 		this.app.use(express.json());
+		this.app.use(passport.initialize());
 		/* Routes */
 		this.app.use('/api/v1', this.routes);
 		/* init server */
 		this.serverListener = this.app.listen(this.port, () => {
-			console.log(`Server is running on port http://localhost:${this.port}`);
+			console.log(`Server is running on http://localhost:${this.port}`);
 		});
 	}
 
