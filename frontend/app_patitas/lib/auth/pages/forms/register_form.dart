@@ -44,12 +44,12 @@ class RegisterForm extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle registration logic
+                      authController.register();
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Const.primaryColorTextOrange),
                     child: const Text(
-                      'Registrarte',
+                      'Registrarse',
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ),
@@ -57,7 +57,9 @@ class RegisterForm extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.back();
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Const.colorTextWhite),
                     child: const Text(
@@ -198,11 +200,11 @@ class RegisterForm extends StatelessWidget {
                 items: [
                   const DropdownMenuItem(
                     value: '1',
-                    child: Text('Option 1'),
+                    child: Text('DNI'),
                   ),
                   const DropdownMenuItem(
                     value: '2',
-                    child: Text('Option 2'),
+                    child: Text('Pasaporte'),
                   ),
                 ],
                 onChanged: (value) {

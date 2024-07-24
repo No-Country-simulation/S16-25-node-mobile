@@ -1,4 +1,5 @@
 import 'package:app_patitas/auth/pages/register_and_login_page.dart';
+import 'package:app_patitas/home/pages/home/home_page.dart';
 import 'package:app_patitas/index/index_page.dart';
 import 'package:app_patitas/onboarding/onepage.dart';
 import 'package:app_patitas/splash/splash_page.dart';
@@ -18,7 +19,7 @@ abstract class Routes {
 class AppRouter {
   List<GetPage<dynamic>>? getPages() {
     return [
-      GetPage(name: Routes.INITIAL, page: () => OnePage()),
+      GetPage(name: Routes.INITIAL, page: () => SplashPage()),
       GetPage(name: Routes.ONBOARDING, page: () => OnePage()),
       GetPage(name: Routes.INDEX, page: () => IndexPage()),
 
@@ -26,6 +27,8 @@ class AppRouter {
 
       GetPage(
           name: Routes.REGISTERANDLOGIN, page: () => RegisterAndLoginPage()),
+
+      GetPage(name: Routes.HOME, page: () => HomePage()),
     ];
   }
 }

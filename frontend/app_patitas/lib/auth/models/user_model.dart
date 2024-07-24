@@ -5,7 +5,7 @@ part 'user_model.freezed.dart';
 part 'user_model.g.dart';
 
 @freezed
-class UserModel with _$UserMode {
+class UserModel with _$UserModel {
   const UserModel._();
   const factory UserModel({
     @JsonKey(name: 'id') int? id,
@@ -18,6 +18,7 @@ class UserModel with _$UserMode {
     @JsonKey(name: 'animals_adopted') List<String>? token,
     @JsonKey(name: 'address') String? animals,
     @JsonKey(name: 'image') String? profile,
+    @JsonKey(name: 'document') String? document,
   }) = _UserModel;
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModeFromJson(json);

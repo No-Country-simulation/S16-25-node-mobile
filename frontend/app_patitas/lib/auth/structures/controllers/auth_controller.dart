@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart';
+import 'package:app_patitas/config/router/app_router.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
@@ -8,9 +9,41 @@ class AuthController extends GetxController {
   String? documentController;
 
   void login() {
+    String email = emailController.text;
+    String password = passwordController.text;
+    if (email.isEmpty || password.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Todos los campos son obligatorios',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error_outline, color: Colors.white),
+      );
+    } else {
+      Get.offAllNamed(Routes.HOME);
+      debugPrint('Login correcto');
+    }
+  }
+
+  void register() {
     String nombre = nombreController.text;
     String email = emailController.text;
     String password = passwordController.text;
-    String document = documentController!;
+    String document = documentController ?? '';
+
+    if (nombre.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        document.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Todos los campos son obligatorios',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error_outline, color: Colors.white),
+      );
+    } else {
+      debugPrint('Login correcto');
+    }
   }
 }
