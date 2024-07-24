@@ -31,6 +31,10 @@ export class RefugioService {
 			throw CustomError.badRequest('El gerente no existe');
 		}
 
+		if (gerenteExists.rol !== 'Gerente') {
+			throw CustomError.badRequest('El usuario debe tener el rol de Gerente');
+		}
+
 		if (correoExists) {
 			throw CustomError.badRequest('El correo ya existe');
 		}
@@ -61,6 +65,18 @@ export class RefugioService {
 
 	async update(id: string, data: UpdateRefugioRequest) {
 		const refugioExists = await this.getById(id);
+
+		if (data.gerente) {
+			const gerenteExists = await UserModel.findById(data.gerente);
+
+			if (!gerenteExists) {
+				throw CustomError.badRequest('El gerente no existe');
+			}
+
+			if (gerenteExists.rol !== 'Gerente') {
+				throw CustomError.badRequest('El usuario debe tener el rol de Gerente');
+			}
+		}
 
 		if (data.image) {
 			const imageUrl = await handleUpload(data.image);

@@ -30,4 +30,12 @@ const ratingSchema = new mongoose.Schema<Rating>({
 	}
 });
 
+ratingSchema.set('toJSON', {
+	virtuals: true,
+	versionKey: false,
+	transform: function (doc, ret, options) {
+		delete ret._id;
+	}
+});
+
 export const RatingModel = mongoose.model('Calificacion', ratingSchema);
