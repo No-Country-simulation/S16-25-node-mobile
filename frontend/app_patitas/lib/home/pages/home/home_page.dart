@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
     RefugiosPage(),
     VeterinariasPage(),
     PerfilPage(),
+    PerfilPage(),
   ];
   int _selectedIndex = 0;
 
@@ -85,8 +86,16 @@ class _HomePageState extends State<HomePage> {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.download),
+                icon: Icon(Icons.apartment),
                 label: 'Refugios',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.pets_sharp,
+                  size: 40,
+                  color: Colors.black,
+                ),
+                label: "+",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.search),

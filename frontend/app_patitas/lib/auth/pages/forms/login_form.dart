@@ -25,7 +25,7 @@ class LoginForm extends StatelessWidget {
             ),*/
             const SizedBox(height: 20),
             _buildTextField(
-                label: 'Email',
+                label: 'Correo electronico',
                 hintText: 'Correo electronico',
                 controlador: authController.emailController),
             const SizedBox(height: 10),

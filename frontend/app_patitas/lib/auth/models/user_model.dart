@@ -21,5 +21,5 @@ class UserModel with _$UserModel {
     @JsonKey(name: 'document') String? document,
   }) = _UserModel;
   factory UserModel.fromJson(Map<String, dynamic> json) =>
-      _$UserModeFromJson(json);
+      _$UserModelFromJson(json);
 }
