@@ -180,12 +180,9 @@ export const loginUserValidator = [
 		.withMessage('El campo email no puede estar vacío')
 		.isEmail()
 		.withMessage('El campo email debe ser un email'),
-	//TODO: chequear contraseña
 	body('password')
 		.notEmpty()
 		.withMessage('El campo password no puede estar vacío')
-		.isString()
-		.withMessage('El campo password debe ser una cadena de texto')
 ];
 export const registerUserValidator = [
 	body('nombre')
@@ -217,12 +214,11 @@ export const registerUserValidator = [
 		.withMessage(
 			'El campo email debe ser una dirección de correo electrónico válida'
 		),
-	//TODO: chequear password y el formato
 	body('password')
 		.notEmpty()
 		.withMessage('El campo contraseña no puede estar vacío')
-		.isLength({ min: 6 })
-		.withMessage('La contraseña debe tener al menos 6 caracteres'),
+		.matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=\S+$).{8,}$/)
+		.withMessage('La contraseña debe tener al menos 8 caracteres, contener al menos un número, una letra mayúscula, un carácter especial y no tener espacios'),
 	body('direccion')
 		.notEmpty()
 		.withMessage('El campo dirección no puede estar vacío')
@@ -258,9 +254,10 @@ export const updateUserValidator = [
 		),
 	//TODO: chequear password y el formato
 	body('password')
-		.optional()
-		.isLength({ min: 6 })
-		.withMessage('La contraseña debe tener al menos 6 caracteres'),
+		.notEmpty()
+		.withMessage('El campo contraseña no puede estar vacío')
+		.matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=\S+$).{8,}$/)
+		.withMessage('La contraseña debe tener al menos 8 caracteres, contener al menos un número, una letra mayúscula, un carácter especial y no tener espacios'),
 	body('direccion')
 		.optional()
 		.isString()
