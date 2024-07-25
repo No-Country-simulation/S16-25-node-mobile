@@ -1,4 +1,4 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, ObjectId } from 'mongoose';
 export interface Animal extends Document {
 	nombre: string;
 	especie: string;
@@ -6,6 +6,7 @@ export interface Animal extends Document {
 	peso: number;
 	image: string;
 	estado: string;
+	refugio: ObjectId;
 }
 
 export type createAnimalRequest = Pick<
@@ -21,8 +22,7 @@ const animalSchema = new mongoose.Schema<Animal>(
 	{
 		nombre: {
 			type: String,
-			required: true,
-			unique: true
+			required: true
 		},
 		especie: {
 			type: String,
@@ -44,6 +44,11 @@ const animalSchema = new mongoose.Schema<Animal>(
 			type: String,
 			enum: ['Activo', 'Pedido', 'Adoptado'],
 			default: 'Activo'
+		},
+		refugio: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Refugio',
+			required: true
 		}
 	},
 	{ timestamps: true }

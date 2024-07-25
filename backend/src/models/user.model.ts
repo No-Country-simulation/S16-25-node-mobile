@@ -7,6 +7,8 @@ export interface User extends Document {
     telefono: number;
     email: string;
     password: string;
+    tipoDocumento: string;
+    documento: number;
     poseeAnimales: boolean;
     conviveMenores: boolean;
     patio: boolean;
@@ -17,14 +19,15 @@ export interface User extends Document {
     donaciones: ObjectId[];
     denuncias: ObjectId[];
     calificaciones: ObjectId[];
+    token:string;
 }
 
 // Defino el tipo UserRequest para manejar las solicitudes HTTP y no tener problemas con la imagen de perfil
 export type UserRequest = Pick<
     User,
-    'nombre' | 'fechaDeNacimiento' | 'rol' | 'telefono' | 'email' | 'password' | 'poseeAnimales' | 'conviveMenores' | 'patio' | 'dimensiones' | 'direccion'
+    'nombre' | 'fechaDeNacimiento' | 'rol' | 'telefono' | 'email' | 'password' | 'poseeAnimales' | 'conviveMenores' | 'patio' | 'dimensiones' | 'direccion' | 'token'
 > & {
-    imagenPerfil: Express.Multer.File;
+    image: Express.Multer.File;
 };
 //Para manejar la edicion del usuario
 export type UpdateUser = Partial<UserRequest>
@@ -55,6 +58,16 @@ const userSchema = new mongoose.Schema<User>({
     password: {
         type: String,
         //required: true,
+    },
+    tipoDocumento: {
+        type: String,
+        enum: ['DNI', 'Pasaporte'],
+        default: 'DNI'
+    },
+    documento: {
+        type: Number,
+        required: true,
+        unique: true,
     },
     poseeAnimales: {
         type: Boolean,
@@ -103,7 +116,10 @@ const userSchema = new mongoose.Schema<User>({
             type: mongoose.Schema.Types.ObjectId,
                 ref: 'Calificacion'
         }
-    ]
+    ]/* ,
+    token:{
+        type: String
+    } */
 },{
     timestamps: true
 });
@@ -115,7 +131,6 @@ userSchema.set("toJSON",{
 		delete ret._id;
 	}
 })
-//pendiente hashear contraseña
 
 //Exporto el modelo
 export const UserModel = mongoose.model('User', userSchema);
