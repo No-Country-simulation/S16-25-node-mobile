@@ -15,7 +15,7 @@ export class AuthService {
 
     constructor() {}
 
-    async register(data: any): Promise<{ user:User; token: string}> {
+    async register(data: any): Promise<{  token: string}> {
 
         const userExists = await UserModel.findOne({ email: data.email });
         if (userExists) {
@@ -28,7 +28,7 @@ export class AuthService {
         /* const imageUrl = await handleUpload(data.image); */
         const imageUrl = "https://res.cloudinary.com/dcp2ljagc/image/upload/v1721955180/Windows_10_Default_Profile_Picture.svg_gjrap2.png"
 
-		const tempUser = { ...data, imagenPerfil: imageUrl };
+		const tempUser = { ...data, rol : "User", imagenPerfil: imageUrl };
         console.log(data)
 
         const user = new UserModel(tempUser);
@@ -36,10 +36,10 @@ export class AuthService {
         
         const token = jwt.sign({id:user.id, email: user.email, rol: user.rol }, JWT_SECRET, { expiresIn: '1h' });
 
-        return { user, token };
+        return { token };
     }
 
-    async login(email: string, password: string ): Promise<{ user:User; token: string}> {
+    async login(email: string, password: string ): Promise<{ token: string}> {
         const user = await UserModel.findOne({ email });
         if (!user) {
             throw CustomError.badRequest('El usuario no existe');
@@ -52,6 +52,14 @@ export class AuthService {
 
         const token = jwt.sign({id:user.id, email: user.email, rol: user.rol }, JWT_SECRET, { expiresIn: '1h' });
 
-        return { user, token };
+        return { token };
+    }
+
+    async getProfile(id: string) {
+        const user = await UserModel.findById(id).select('-password -token -createdAt -updatedAt -__v');
+        if (!user) {
+            throw CustomError.notFound('El usuario no existe');
+        }
+        return user;
     }
 }
