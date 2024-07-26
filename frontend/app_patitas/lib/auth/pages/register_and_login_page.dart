@@ -32,8 +32,8 @@ class RegisterAndLoginPage extends StatelessWidget {
                 //fontWeight: FontWeight.bold,
                 color: Const.primaryColorTextOrange),
             tabs: [
-              Tab(text: 'Register'),
-              Tab(text: 'Login'),
+              Tab(text: 'Registrarse'),
+              Tab(text: 'Ingresar'),
             ],
           ),
         ),

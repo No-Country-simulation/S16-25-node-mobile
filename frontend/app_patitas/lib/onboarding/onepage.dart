@@ -33,18 +33,18 @@ class OnePage extends StatelessWidget {
                   color: Const.colorTextBlack,
                 ),
               ),
-              const SizedBox(height: 32),
+              //const SizedBox(height: 22),
               Image.asset(
                 'assets/images/dog.png', // Ensure this path matches your asset
                 height: 400,
               ),
-              const SizedBox(height: 32),
+              //const SizedBox(height: 20),
               ElevatedButton.icon(
                 onPressed: () {
                   Get.toNamed(Routes.INDEX);
                 },
                 icon: const Icon(Icons.pets),
-                label: const Text('Step'),
+                label: const Text('Continuar'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
                   backgroundColor: Colors.white,

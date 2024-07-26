@@ -23,7 +23,7 @@ class RegisterForm extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             _buildTextField(
-              label: 'Email',
+              label: 'Correo electronico',
               hintText: 'Correo electronico',
               controlador: authController.emailController,
             ),
@@ -210,7 +210,7 @@ class RegisterForm extends StatelessWidget {
                 onChanged: (value) {
                   authController.documentController = value;
                 },
-                hint: const Text('Select'),
+                hint: const Text('Selecciona'),
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                 ),

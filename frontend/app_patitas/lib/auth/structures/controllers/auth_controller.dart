@@ -1,3 +1,5 @@
+import 'package:app_patitas/auth/models/user_model.dart';
+import 'package:app_patitas/auth/services/auth_repository.dart';
 import 'package:app_patitas/config/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +22,7 @@ class AuthController extends GetxController {
         icon: const Icon(Icons.error_outline, color: Colors.white),
       );
     } else {
-      Get.offAllNamed(Routes.HOME);
+      //Get.offAllNamed(Routes.HOME);
       debugPrint('Login correcto');
     }
   }
@@ -43,6 +45,12 @@ class AuthController extends GetxController {
         icon: const Icon(Icons.error_outline, color: Colors.white),
       );
     } else {
+      AuthRepository().register(UserModel(
+        name: nombreController.text,
+        email: email,
+        password: password,
+        document: documentController,
+      ));
       debugPrint('Login correcto');
     }
   }
