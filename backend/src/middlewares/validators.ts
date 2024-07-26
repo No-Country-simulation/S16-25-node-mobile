@@ -197,13 +197,13 @@ export const registerUserValidator = [
 		.withMessage('El campo fecha de nacimiento no puede estar vacío')
 		.isDate()
 		.withMessage('El campo fecha de nacimiento debe ser una fecha válida'),
-	body('rol')
-		.notEmpty()
-		.withMessage('El campo rol no puede estar vacío')
-		.isIn(['Admin', 'User', 'Gerente'])
+	/*  */body('rol')
+		/* .notEmpty()
+		.withMessage('El campo rol no puede estar vacío') */
+		.isIn(['User'])
 		.withMessage(
-			'El campo rol debe ser uno de los siguientes: Admin, User, Gerente'
-		), */
+			'El campo rol debe ser User'
+		),
 	/* body('telefono')
 		.notEmpty()
 		.withMessage('El campo teléfono no puede estar vacío')
