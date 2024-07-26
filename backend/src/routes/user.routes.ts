@@ -4,6 +4,7 @@ import { UserController } from '../controller/user.controller';
 import { updateUserValidator } from '../middlewares/validators';
 import { HandleInputErrors } from '../middlewares/validateInput';
 import upload from '../middlewares/handleFile';
+import { checkRol } from '../middlewares/checkRol';
 
 export class UserRouter {
 	static get routes(): Router {
@@ -12,8 +13,8 @@ export class UserRouter {
 		const controller = new UserController(userService);
 		//TODO: agregar chequeo de rol admin
 		//TODO: agregar ruta para atualziar solo contraseña
-		router.get('/', controller.getAll);
-		router.get('/:id', controller.getById);
+		router.get('/', checkRol(['Admin']), controller.getAll);
+		router.get('/:id', checkRol(['Admin']), controller.getById);
 		router.put(
 			'/:id',
 			upload.single('imagenPerfil'),
@@ -21,7 +22,7 @@ export class UserRouter {
 			HandleInputErrors,
 			controller.update
 		);
-		router.delete('/:id', controller.delete);
+		router.delete('/:id', checkRol(['Admin']), controller.delete);
 
 		return router;
 	}

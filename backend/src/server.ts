@@ -27,7 +27,7 @@ export class Server {
 		this.app.use('/api/v1', this.routes);
 		/* init server */
 		this.serverListener = this.app.listen(this.port, () => {
-			console.log(`Server is running on http://localhost:${this.port}`);
+			console.log(`Server is running on http://localhost:${this.port}/api/v1`);
 		});
 	}
 

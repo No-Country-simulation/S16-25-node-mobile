@@ -47,8 +47,8 @@ const userSchema = new mongoose.Schema<User>({
     }, 
     telefono: {
         type: Number,
-        required: true,
-        unique: true,
+        //required: true,
+        //unique: true,
     },
     email: {
         type: String,
@@ -87,8 +87,8 @@ const userSchema = new mongoose.Schema<User>({
     },
     direccion: {
         type: String,
-        required: true,
-        unique: true,
+        //required: true,
+        //unique: true,
     },
     imagenPerfil:{
         type: String,

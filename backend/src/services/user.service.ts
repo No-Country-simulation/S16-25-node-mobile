@@ -16,7 +16,7 @@ export class UserService {
     }
 	
 	async getById(id: string) {
-		const findUser = await UserModel.findById(id);
+		const findUser = await UserModel.findById(id).select('-password -token -createdAt -updatedAt -__v');
 		
 		if (!findUser) {
 			throw CustomError.notFound('Usuario no encontrado');
@@ -35,7 +35,6 @@ export class UserService {
 		if (data.password) {
 			data.password = await bcrypt.hash(data.password, 10);
 		}
-console.log(data)
 		if (data.image) {
 			const imageUrl = await handleUpload(data.image);
 
@@ -44,7 +43,6 @@ console.log(data)
 				imagenPerfil: imageUrl
 			});
 
-			/* data.imagenPerfil = imageUrl; */
 		}else {
 			await UserModel.findByIdAndUpdate(id, {
 				...data
