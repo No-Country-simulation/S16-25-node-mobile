@@ -25,8 +25,10 @@ export class AuthService {
         const hashedPassword = await bcrypt.hash(data.password, 10);
         data.password = hashedPassword;
 
-        const imageUrl = await handleUpload(data.image);
+        /* const imageUrl = await handleUpload(data.image); */
+        const imageUrl = "https://res.cloudinary.com/dcp2ljagc/image/upload/v1721955180/Windows_10_Default_Profile_Picture.svg_gjrap2.png"
 
+        //solo registrar los datos email, password, tipo dni y numero dni
 		const tempUser = { ...data, imagenPerfil: imageUrl };
         console.log(data)
 
