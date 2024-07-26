@@ -8,6 +8,7 @@ interface Refugio extends Document {
 	gerente: ObjectId;
 	animales: ObjectId[];
 	publicaciones: ObjectId[];
+	calificaciones: ObjectId[];
 }
 
 export type RefugioRequest = Pick<
@@ -52,6 +53,12 @@ const refugioSchema = new mongoose.Schema<Refugio>(
 			{
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'Publicacion'
+			}
+		],
+		calificaciones: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Calificacion'
 			}
 		]
 	},

@@ -51,11 +51,6 @@ export const bodyRatingValidator = [
 		.withMessage('El texto no puede ir vacío')
 		.isString()
 		.withMessage('El texto debe ser del tipo string'),
-	body('user')
-		.notEmpty()
-		.withMessage('El user no debe ir vació')
-		.isMongoId()
-		.withMessage('debe ser un id de mongo valido'),
 	body('refugio')
 		.notEmpty()
 		.withMessage('El refugio no debe ir vació')
@@ -218,7 +213,9 @@ export const registerUserValidator = [
 		.notEmpty()
 		.withMessage('El campo contraseña no puede estar vacío')
 		.matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=\S+$).{8,}$/)
-		.withMessage('La contraseña debe tener al menos 8 caracteres, contener al menos un número, una letra mayúscula, un carácter especial y no tener espacios'),
+		.withMessage(
+			'La contraseña debe tener al menos 8 caracteres, contener al menos un número, una letra mayúscula, un carácter especial y no tener espacios'
+		),
 	body('direccion')
 		.notEmpty()
 		.withMessage('El campo dirección no puede estar vacío')
@@ -257,7 +254,9 @@ export const updateUserValidator = [
 		.notEmpty()
 		.withMessage('El campo contraseña no puede estar vacío')
 		.matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=\S+$).{8,}$/)
-		.withMessage('La contraseña debe tener al menos 8 caracteres, contener al menos un número, una letra mayúscula, un carácter especial y no tener espacios'),
+		.withMessage(
+			'La contraseña debe tener al menos 8 caracteres, contener al menos un número, una letra mayúscula, un carácter especial y no tener espacios'
+		),
 	body('direccion')
 		.optional()
 		.isString()
