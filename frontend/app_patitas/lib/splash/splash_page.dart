@@ -1,3 +1,4 @@
+import 'package:app_patitas/config/constantes/const.dart';
 import 'package:app_patitas/config/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,12 +13,17 @@ class SplashPage extends StatefulWidget {
 }
 
 class _MyAppState extends State<SplashPage> {
-  GetStorage storage = GetStorage();
   bool shouldSkipOnboarding = false;
 
-  void load(userJson) async {
-    //UserModel dataUser = UserModel.fromJson(userJson);
-    //await storage.write('loginDataCustomer', dataUser);
+  void load() async {
+    print(await Const.getStorage.read(key: "token"));
+    if (await Const.getStorage.read(key: "token") != null) {
+      //print(storage.read("loginDataCustomer"));
+      Get.offAllNamed(Routes.HOME);
+    } else {
+      //print("vamos al login");
+      Get.offAllNamed(Routes.ONBOARDING);
+    }
   }
 
   @override
@@ -25,20 +31,7 @@ class _MyAppState extends State<SplashPage> {
     super.initState();
     Future.delayed(const Duration(seconds: 5), () async {
       _checkSkipOnboarding().then((value) {
-        if (storage.read("skipOnboarding") != null &&
-            storage.read("skipOnboarding") == true) {
-          if (storage.read("loginDataCustomer") != null) {
-            load(storage.read("loginDataCustomer"));
-            //print(storage.read("loginDataCustomer"));
-            //Get.offAllNamed(Routes.HOME);
-          } else {
-            //print("vamos al login");
-            Get.offAllNamed(Routes.REGISTERANDLOGIN);
-          }
-        } else {
-          //print("vamos al onboarding");
-          Get.offAllNamed(Routes.ONBOARDING);
-        }
+        load();
       });
     });
   }

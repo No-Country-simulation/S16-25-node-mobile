@@ -5,7 +5,9 @@ targets:
         generate_for:
           include:
             - "lib/auth/models/**_model.dart"
+            - "lib/home/models/**_model.dart"
       json_serializable:
         generate_for:
           include:
             - "lib/auth/models/**_model.dart"
+            - "lib/home/models/**_model.dart"

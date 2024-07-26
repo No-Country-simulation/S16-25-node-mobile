@@ -8,9 +8,12 @@ class AuthController extends GetxController {
   TextEditingController nombreController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  String? documentController;
+  String? typodocumentController;
+  TextEditingController documentController = TextEditingController();
+  bool isLoading = false;
 
-  void login() {
+  void login() async {
+    isLoading = true;
     String email = emailController.text;
     String password = passwordController.text;
     if (email.isEmpty || password.isEmpty) {
@@ -22,21 +25,29 @@ class AuthController extends GetxController {
         icon: const Icon(Icons.error_outline, color: Colors.white),
       );
     } else {
-      //Get.offAllNamed(Routes.HOME);
-      debugPrint('Login correcto');
+      if (await AuthRepository().login(UserModel(
+            email: email,
+            password: password,
+          )) !=
+          null) {
+        isLoading = false;
+        Get.offAllNamed(Routes.HOME);
+        debugPrint('Login correcto1');
+      }
     }
   }
 
-  void register() {
+  void register() async {
     String nombre = nombreController.text;
     String email = emailController.text;
     String password = passwordController.text;
-    String document = documentController ?? '';
+    String typodocument = typodocumentController ?? '';
 
     if (nombre.isEmpty ||
         email.isEmpty ||
         password.isEmpty ||
-        document.isEmpty) {
+        typodocument.isEmpty ||
+        documentController.text.isEmpty) {
       Get.snackbar(
         'Error',
         'Todos los campos son obligatorios',
@@ -45,13 +56,30 @@ class AuthController extends GetxController {
         icon: const Icon(Icons.error_outline, color: Colors.white),
       );
     } else {
-      AuthRepository().register(UserModel(
-        name: nombreController.text,
-        email: email,
-        password: password,
-        document: documentController,
-      ));
-      debugPrint('Login correcto');
+      /*print("Enviando datos al servidor...");
+      print("name = $nombre");
+      print("email = $email");
+      print("password = $password");
+      print("typodocument = $typodocument");
+      print("document = ${documentController.text}");*/
+
+      String tipo = (documentController.text == '1') ? 'DNI' : 'Pasaporte';
+      if (await AuthRepository().register(UserModel(
+              name: nombre,
+              email: email,
+              password: password,
+              document: typodocument,
+              typodocument: tipo)) !=
+          null) {
+        Get.defaultDialog(
+            title: "Registro Correcto",
+            content: const Text("Se ha registrado correctamente"),
+            textConfirm: "Ok",
+            onConfirm: () {
+              Get.back();
+            });
+        debugPrint('Registro Correcto');
+      }
     }
   }
 }
