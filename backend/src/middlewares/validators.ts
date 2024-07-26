@@ -190,7 +190,9 @@ export const registerUserValidator = [
 		.withMessage('El campo nombre no puede estar vacío')
 		.isString()
 		.withMessage('El campo nombre debe ser una cadena de texto'),
-	body('fechaDeNacimiento')
+		
+        //solo registrar los datos email, password, tipo dni y numero dni
+	/* body('fechaDeNacimiento')
 		.notEmpty()
 		.withMessage('El campo fecha de nacimiento no puede estar vacío')
 		.isDate()
@@ -201,12 +203,12 @@ export const registerUserValidator = [
 		.isIn(['Admin', 'User', 'Gerente'])
 		.withMessage(
 			'El campo rol debe ser uno de los siguientes: Admin, User, Gerente'
-		),
-	body('telefono')
+		), */
+	/* body('telefono')
 		.notEmpty()
 		.withMessage('El campo teléfono no puede estar vacío')
 		.isInt({ min: 0 })
-		.withMessage('El campo teléfono debe ser un número entero positivo'),
+		.withMessage('El campo teléfono debe ser un número entero positivo'), */
 	body('email')
 		.notEmpty()
 		.withMessage('El campo email no puede estar vacío')
@@ -217,13 +219,13 @@ export const registerUserValidator = [
 	body('password')
 		.notEmpty()
 		.withMessage('El campo contraseña no puede estar vacío')
-		.matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=\S+$).{8,}$/)
-		.withMessage('La contraseña debe tener al menos 8 caracteres, contener al menos un número, una letra mayúscula, un carácter especial y no tener espacios'),
-	body('direccion')
+		//.matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=\S+$).{8,}$/)
+		//.withMessage('La contraseña debe tener al menos 8 caracteres, contener al menos un número, una letra mayúscula, un carácter especial y no tener espacios'),
+	/* body('direccion')
 		.notEmpty()
 		.withMessage('El campo dirección no puede estar vacío')
 		.isString()
-		.withMessage('El campo dirección debe ser una cadena de texto')
+		.withMessage('El campo dirección debe ser una cadena de texto') */
 ];
 
 // Validaciones para la actualización de usuario
