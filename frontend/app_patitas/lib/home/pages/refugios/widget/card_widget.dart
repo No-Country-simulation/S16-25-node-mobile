@@ -1,8 +1,10 @@
+import 'package:app_patitas/home/models/animal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({super.key});
+  final AnimalModel mascota;
+  const CardWidget({super.key, required this.mascota});
 
   @override
   Widget build(BuildContext context) {
@@ -33,24 +35,24 @@ class CardWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16.0),
-          const Center(
+          Center(
             child: Image(
-              image: NetworkImage('https://via.placeholder.com/150'),
+              image:
+                  NetworkImage(mascota.image ?? 'assets/images/descarga.png'),
               height: 150,
               width: 150,
             ),
           ),
           const SizedBox(height: 16.0),
-          const Text(
-            'Nombre y Edad: Brandy (2 años)',
+          Text(
+            'Nombre y Edad: ${mascota.nombre} (${mascota.edad} años)',
             style: TextStyle(fontSize: 16.0, color: Colors.orange),
           ),
           const Text('Raza: Mestizo', style: TextStyle(fontSize: 16.0)),
           const Text('Tamaño: Mediano', style: TextStyle(fontSize: 16.0)),
           const Text('Sexo: Hembra', style: TextStyle(fontSize: 16.0)),
-          const Text('Peso: 20kg', style: TextStyle(fontSize: 16.0)),
-          const Text('Estado: Atención Médica',
-              style: TextStyle(fontSize: 16.0)),
+          Text('Peso: ${mascota.peso}', style: TextStyle(fontSize: 16.0)),
+          Text('Estado: ${mascota.estado}', style: TextStyle(fontSize: 16.0)),
           const SizedBox(height: 16.0),
           Align(
             alignment: Alignment.centerRight,

@@ -44,10 +44,12 @@ class LoginForm extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange),
-                    child: const Text(
-                      'Ingresar',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
+                    child: authController.isLoading
+                        ? const CircularProgressIndicator()
+                        : const Text(
+                            'Ingresar',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
                   ),
                 ),
                 const SizedBox(width: 10),

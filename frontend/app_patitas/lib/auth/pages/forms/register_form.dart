@@ -208,7 +208,7 @@ class RegisterForm extends StatelessWidget {
                   ),
                 ],
                 onChanged: (value) {
-                  authController.documentController = value;
+                  authController.typodocumentController = value;
                 },
                 hint: const Text('Selecciona'),
                 decoration: const InputDecoration(
@@ -217,9 +217,10 @@ class RegisterForm extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            const Expanded(
+            Expanded(
               child: TextField(
-                decoration: InputDecoration(
+                controller: authController.documentController,
+                decoration: const InputDecoration(
                   hintStyle: TextStyle(color: Colors.grey),
                   hintText: '0000000000',
                   border: OutlineInputBorder(),

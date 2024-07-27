@@ -1,11 +1,14 @@
 import 'package:app_patitas/config/constantes/const.dart';
+import 'package:app_patitas/home/models/refugio_model.dart';
 import 'package:app_patitas/home/pages/home/home_publicaciones_list_page.dart';
 import 'package:app_patitas/home/pages/refugios/widget/card_widget.dart';
+import 'package:app_patitas/home/structures/controllers/refugio_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RefugioDetail extends StatelessWidget {
-  const RefugioDetail({super.key});
+  final RefugioModel refugio;
+  const RefugioDetail({super.key, required this.refugio});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +22,15 @@ class RefugioDetail extends StatelessWidget {
               Stack(
                 children: [
                   Positioned.fill(
-                    child: Image.asset(
-                      'assets/images/descarga.png',
-                      fit: BoxFit.cover,
-                    ),
+                    child: refugio.image != null
+                        ? Image.network(
+                            refugio.image!,
+                            fit: BoxFit.fill,
+                          )
+                        : Image.asset(
+                            'assets/images/descarga.png',
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -83,10 +91,10 @@ class RefugioDetail extends StatelessWidget {
                 style: TextStyle(color: Colors.orange),
               ),
               // Contenedor para el TabBarView sin la imagen de fondo
-              const Expanded(
+              Expanded(
                 child: TabBarView(
                   children: [
-                    MascotasTab(),
+                    MascotasTab(id: refugio.animales!),
                     HomePublicacionesListPage(),
                     InformacionTab(),
                   ],
@@ -101,47 +109,61 @@ class RefugioDetail extends StatelessWidget {
 }
 
 class MascotasTab extends StatelessWidget {
-  const MascotasTab({super.key});
+  final List<String> id;
+  final RefugioController mascotasController = Get.put(RefugioController());
+
+  MascotasTab({super.key, required this.id}) {
+    // Cargar los datos cuando el widget se construya
+    mascotasController.fetchAnimals(id);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      children: List.generate(2, (index) {
-        return GestureDetector(
-          onTap: () {
-            Get.dialog(const CardWidget());
-            /*Get.generalDialog(
-                pageBuilder: (context, animation, secondaryAnimation) {
-              return const Center(child: CardWidget());
-            });*/
-          },
-          child: Card(
-            margin: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Image.network(
-                    index == 0
-                        ? 'https://example.com/dog1.jpg'
-                        : 'https://example.com/dog2.jpg',
-                    fit: BoxFit.cover,
+    return Obx(() {
+      return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 8.0,
+          mainAxisSpacing: 8.0,
+        ),
+        itemCount: mascotasController.mascotas.length,
+        itemBuilder: (context, index) {
+          final mascota = mascotasController.mascotas[index];
+          return GestureDetector(
+            onTap: () {
+              Get.dialog(
+                Center(
+                  child: CardWidget(
+                    mascota: mascota,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    index == 0 ? 'Blanca (5 años)' : 'Lila (3 años)',
-                    style: const TextStyle(fontSize: 16.0),
+              );
+            },
+            child: Card(
+              margin: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Image.network(
+                      mascota.image ?? 'assets/images/descarga.png',
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      '${mascota.nombre} (${mascota.edad} años)',
+                      style: const TextStyle(fontSize: 16.0),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      }),
-    );
+          );
+        },
+      );
+    });
   }
 }
 

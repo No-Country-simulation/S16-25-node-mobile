@@ -2,10 +2,10 @@ import 'package:app_patitas/home/structures/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomePublicacionesListPage extends StatelessWidget {
+class RefugioPublicacionPage extends StatelessWidget {
   final HomeController homeController = Get.put(HomeController());
 
-  HomePublicacionesListPage({super.key});
+  RefugioPublicacionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
