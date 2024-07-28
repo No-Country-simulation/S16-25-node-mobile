@@ -197,13 +197,13 @@ export const registerUserValidator = [
 		.withMessage('El campo fecha de nacimiento no puede estar vacío')
 		.isDate()
 		.withMessage('El campo fecha de nacimiento debe ser una fecha válida'),
-	body('rol')
-		.notEmpty()
-		.withMessage('El campo rol no puede estar vacío')
-		.isIn(['Admin', 'User', 'Gerente'])
+	/*  */body('rol')
+		/* .notEmpty()
+		.withMessage('El campo rol no puede estar vacío') */
+		.isIn(['User'])
 		.withMessage(
-			'El campo rol debe ser uno de los siguientes: Admin, User, Gerente'
-		), */
+			'El campo rol debe ser User'
+		),
 	/* body('telefono')
 		.notEmpty()
 		.withMessage('El campo teléfono no puede estar vacío')
@@ -256,8 +256,9 @@ export const updateUserValidator = [
 		),
 	//TODO: chequear password y el formato
 	body('password')
-		.notEmpty()
-		.withMessage('El campo contraseña no puede estar vacío')
+		/* .notEmpty()
+		.withMessage('El campo contraseña no puede estar vacío') */
+		.optional()
 		.matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=\S+$).{8,}$/)
 		.withMessage('La contraseña debe tener al menos 8 caracteres, contener al menos un número, una letra mayúscula, un carácter especial y no tener espacios'),
 	body('direccion')

@@ -14,7 +14,7 @@ export class PostService {
 	async geAll() {
 		const [total, posts] = await Promise.all([
 			PostModel.countDocuments(),
-			PostModel.find()
+			PostModel.find().populate('refugio')
 		]);
 
 		return { total, posts };

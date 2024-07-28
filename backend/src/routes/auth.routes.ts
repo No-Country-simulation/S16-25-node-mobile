@@ -7,6 +7,7 @@ import {
 } from '../middlewares/validators';
 import { HandleInputErrors } from '../middlewares/validateInput';
 import upload from '../middlewares/handleFile';
+import { checkToken } from '../middlewares/checkToken';
 
 export class AuthRoutes {
 	static get routes(): Router {
@@ -27,6 +28,8 @@ export class AuthRoutes {
 			HandleInputErrors,
 			controller.register
 		);
+
+		router.get('/profile', checkToken, controller.getProfile);
 		return router;
 	}
 }
