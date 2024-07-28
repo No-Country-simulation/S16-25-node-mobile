@@ -38,6 +38,7 @@ const postSchema = new mongoose.Schema<Post>(
 		},
 		refugio: {
 			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Refugio',
 			required: true
 		}
 	},

@@ -54,7 +54,7 @@ export class RefugioService {
 	}
 
 	async getById(id: string) {
-		const refugioExists = await RefugioModel.findById(id);
+		const refugioExists = await RefugioModel.findById(id).populate('publicaciones animales');
 
 		if (!refugioExists) {
 			throw CustomError.notFound('El refugio no existe');

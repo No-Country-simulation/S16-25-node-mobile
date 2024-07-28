@@ -256,8 +256,9 @@ export const updateUserValidator = [
 		),
 	//TODO: chequear password y el formato
 	body('password')
-		.notEmpty()
-		.withMessage('El campo contraseña no puede estar vacío')
+		/* .notEmpty()
+		.withMessage('El campo contraseña no puede estar vacío') */
+		.optional()
 		.matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=\S+$).{8,}$/)
 		.withMessage('La contraseña debe tener al menos 8 caracteres, contener al menos un número, una letra mayúscula, un carácter especial y no tener espacios'),
 	body('direccion')

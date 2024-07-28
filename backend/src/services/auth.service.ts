@@ -15,7 +15,7 @@ export class AuthService {
 
     constructor() {}
 
-    async register(data: any): Promise<{  token: string}> {
+    async register(data: any): Promise<{  message: string}> {
 
         const userExists = await UserModel.findOne({ email: data.email });
         if (userExists) {
@@ -29,17 +29,17 @@ export class AuthService {
         const imageUrl = "https://res.cloudinary.com/dcp2ljagc/image/upload/v1721955180/Windows_10_Default_Profile_Picture.svg_gjrap2.png"
 
 		const tempUser = { ...data, rol : "User", imagenPerfil: imageUrl };
-        console.log(data)
+        //console.log(data)
 
         const user = new UserModel(tempUser);
         await user.save();
         
-        const token = jwt.sign({id:user.id, email: user.email, rol: user.rol }, JWT_SECRET, { expiresIn: '1h' });
+        //const token = jwt.sign({id:user.id, email: user.email, rol: user.rol }, JWT_SECRET, { expiresIn: '1h' });
 
-        return { token };
+        return { message: 'Usuario registrado correctamente' };
     }
 
-    async login(email: string, password: string ): Promise<{ token: string}> {
+    async login(email: string, password: string ): Promise<{ token: string , rol: string}> {
         const user = await UserModel.findOne({ email });
         if (!user) {
             throw CustomError.badRequest('El usuario no existe');
@@ -52,7 +52,7 @@ export class AuthService {
 
         const token = jwt.sign({id:user.id, email: user.email, rol: user.rol }, JWT_SECRET, { expiresIn: '1h' });
 
-        return { token };
+        return { token, rol: user.rol };
     }
 
     async getProfile(id: string) {
