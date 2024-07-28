@@ -16,6 +16,8 @@ class AnimalModel with _$AnimalModel {
     @JsonKey(name: 'peso') int? peso,
     @JsonKey(name: 'image') String? image,
     @JsonKey(name: 'estado') String? estado,
+    @JsonKey(name: 'tamanio') String? tamanio,
+    @JsonKey(name: 'sexo') String? sexo,
     //@JsonKey(name: 'token_user') String? token_user,
   }) = _AnimalModel;
 

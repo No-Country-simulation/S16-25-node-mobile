@@ -20,11 +20,14 @@ class AuthRepository {
         },
       );
 
+      print(response.data);
       if (response.statusCode == 200) {
         await Const.getStorage
             .write(key: "token", value: response.data["token"]);
+        await Const.getStorage.write(key: "rol", value: response.data["rol"]);
 
         print(await Const.getStorage.read(key: "token"));
+        print(await Const.getStorage.read(key: "rol"));
         return response.data;
       }
 

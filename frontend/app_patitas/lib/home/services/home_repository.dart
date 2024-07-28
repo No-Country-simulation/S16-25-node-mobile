@@ -8,21 +8,21 @@ class HomeRepository {
 
   Future<List<PublicacionesModel>?> getPublicaciones() async {
     final token = await Const.getStorage.read(key: "token") ?? "";
-    try {
-      final response = await dio.get(
-        urlPost,
-        options: Options(headers: {"Authorization": "Bearer $token"}),
-      );
+    // try {
+    final response = await dio.get(
+      urlPost,
+      options: Options(headers: {"Authorization": "Bearer $token"}),
+    );
 
-      // Extraer la lista de posts de la respuesta
-      final Map<String, dynamic> responseData = response.data;
-      final List<dynamic> posts = responseData['posts'];
-      print("Respuesta del servidor: $posts");
+    // Extraer la lista de posts de la respuesta
+    final Map<String, dynamic> responseData = response.data;
+    final List<dynamic> posts = responseData['posts'];
+    print("Respuesta del servidor: $posts");
 
-      return posts.map((json) => PublicacionesModel.fromJson(json)).toList();
-    } catch (e) {
+    return posts.map((json) => PublicacionesModel.fromJson(json)).toList();
+    /*} catch (e) {
       print("Error al obtener publicaciones: $e");
       return null;
-    }
+    }*/
   }
 }

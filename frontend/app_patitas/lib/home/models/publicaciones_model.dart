@@ -11,7 +11,7 @@ class PublicacionesModel with _$PublicacionesModel {
     @JsonKey(name: 'titulo') String? titulo,
     @JsonKey(name: 'texto') String? texto,
     @JsonKey(name: 'image') String? image,
-    @JsonKey(name: 'refugio') String? refugio,
+    @JsonKey(name: 'refugio') Map<String, dynamic>? refugio,
     //@JsonKey(name: 'token_user') String? token_user,
   }) = _PublicacionesModel;
 

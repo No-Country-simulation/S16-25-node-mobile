@@ -84,7 +84,7 @@ class RefugiosPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 4.0),
                         Text(
-                          'Animales disponibles: 11',
+                          'Animales disponibles: ${refugio.animales!.length}',
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 12.0,

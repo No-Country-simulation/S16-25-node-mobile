@@ -16,7 +16,7 @@ class _MyAppState extends State<SplashPage> {
   bool shouldSkipOnboarding = false;
 
   void load() async {
-    print(await Const.getStorage.read(key: "token"));
+    //print(await Const.getStorage.read(key: "token"));
     if (await Const.getStorage.read(key: "token") != null) {
       //print(storage.read("loginDataCustomer"));
       Get.offAllNamed(Routes.HOME);
@@ -43,61 +43,11 @@ class _MyAppState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFE38300),
+      backgroundColor: Colors.white,
       body: ZoomIn(
         duration: Duration(seconds: 2),
-        child: Stack(
-          children: [
-            // Huella central
-            Positioned(
-              left: 140,
-              top: 420,
-              child: ZoomIn(
-                duration: Duration(seconds: 4),
-                child: CircleAvatar(
-                  radius: 70,
-                  backgroundColor: Colors.white,
-                ),
-              ),
-            ),
-            // Primer dedo
-            Positioned(
-              left: 90,
-              bottom: 410,
-              child: ZoomIn(
-                duration: Duration(seconds: 2),
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                ),
-              ),
-            ),
-            // Segundo dedo
-            Positioned(
-              left: 180,
-              bottom: 450,
-              child: ZoomIn(
-                duration: Duration(seconds: 3),
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                ),
-              ),
-            ),
-            // Tercer dedo
-            Positioned(
-              left: 260,
-              bottom: 410,
-              child: ZoomIn(
-                duration: Duration(seconds: 4),
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                ),
-              ),
-            ),
-            // Cuarto dedo
-          ],
+        child: Center(
+          child: Image.asset('assets/images/splash.png'),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:app_patitas/config/constantes/const.dart';
 import 'package:app_patitas/home/structures/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,9 +7,16 @@ class HomePublicacionesListPage extends StatelessWidget {
   final HomeController homeController = Get.put(HomeController());
 
   HomePublicacionesListPage({super.key});
+  var rol = '';
+
+  void load() async {
+    rol = await Const.getStorage.read(key: "rol") ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
+    load();
+    print(rol);
     return Scaffold(
       body: Obx(() {
         if (homeController.publicaciones.isEmpty) {
@@ -29,24 +37,62 @@ class HomePublicacionesListPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(refugio.image!),
-                          radius: 20,
-                        ),
-                        const SizedBox(width: 8.0),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            Text(
-                              refugio.titulo ?? 'Nombre del refugio',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                            CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(refugio.refugio!["image"]),
+                              radius: 20,
                             ),
-                            const Text(
-                                '2 hours ago'), // You may want to replace this with dynamic data
+                            const SizedBox(width: 8.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  refugio.refugio!["nombre"] ??
+                                      'Nombre del refugio',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const Text(
+                                    '2 hours ago'), // You may want to replace this with dynamic data
+                              ],
+                            ),
                           ],
                         ),
+                        rol == 'admin'
+                            ? PopupMenuButton(
+                                onSelected: (value) {
+                                  // Maneja las opciones seleccionadas aquí
+                                  if (value == 'edit') {
+                                    // Acción para editar publicación
+                                    print('Editar publicación');
+                                  } else if (value == 'delete') {
+                                    // Acción para eliminar publicación
+                                    print('Eliminar publicación');
+                                  }
+                                },
+                                itemBuilder: (context) => [
+                                  PopupMenuItem<String>(
+                                    value: 'edit',
+                                    child: ListTile(
+                                      leading: Icon(Icons.edit),
+                                      title: Text('Editar publicación'),
+                                    ),
+                                  ),
+                                  PopupMenuItem<String>(
+                                    value: 'delete',
+                                    child: ListTile(
+                                      leading:
+                                          Icon(Icons.delete, color: Colors.red),
+                                      title: Text('Eliminar publicación'),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Container(),
                       ],
                     ),
                     const SizedBox(height: 16.0),

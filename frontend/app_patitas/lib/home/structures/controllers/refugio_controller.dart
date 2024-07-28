@@ -1,11 +1,13 @@
 import 'package:app_patitas/home/models/animal_model.dart';
+import 'package:app_patitas/home/models/datarefugio_model.dart';
 import 'package:app_patitas/home/models/refugio_model.dart';
 import 'package:app_patitas/home/services/refugio_repository.dart';
 import 'package:get/get.dart';
 
 class RefugioController extends GetxController {
   RxList<RefugioModel> refugios = RxList<RefugioModel>([]);
-  var mascotas = RxList<AnimalModel>([]);
+  var dataRefugio = Rxn<DataRefugioModel>();
+  var mascotas = <AnimalModel>[].obs;
 
   @override
   void onInit() {
@@ -21,20 +23,11 @@ class RefugioController extends GetxController {
     }
   }
 
-  Future<void> fetchAnimals(List<String> ids) async {
-    // Limpia la lista actual
-    mascotas.clear();
-
-    // Obtén datos para cada id
-    for (var id in ids) {
-      var animal = await getAnimals(id);
-      if (animal != null) {
-        mascotas.add(animal);
-      }
-    }
+  void getDetallesRefugio(String id) async {
+    dataRefugio.value = await RefugiosRepository().getDetallesRefugio(id);
   }
 
-  Future<AnimalModel?> getAnimals(String id) async {
-    return await RefugiosRepository().getAnimals(id);
+  void setMascotas(List<AnimalModel> mascotasData) {
+    mascotas.value = mascotasData;
   }
 }

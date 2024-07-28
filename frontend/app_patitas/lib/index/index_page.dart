@@ -66,7 +66,7 @@ class IndexPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               onPressed: () {
-                // Navigate to Register or Login
+                Get.offAllNamed(Routes.HOME);
               },
             ),
             const SizedBox(height: 10),
@@ -128,7 +128,27 @@ class IndexPage extends StatelessWidget {
             TextButton(
               child: const Text('¿Necesitas ayuda personalizada?'),
               onPressed: () {
-                // Navigate to help page
+                Get.dialog(
+                  Center(
+                    child: Column(
+                      children: [
+                        Text("Te ayudaremos personalmente"),
+                        TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Escribe tu email',
+                          ),
+                        ),
+                        ElevatedButton(
+                          child: Text("Enviar"),
+                          onPressed: () {
+                            //Get.back();
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                );
               },
             ),
           ],
