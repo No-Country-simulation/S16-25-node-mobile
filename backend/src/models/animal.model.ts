@@ -72,7 +72,7 @@ const animalSchema = new mongoose.Schema<Animal>(
 			{
 				type: String,
 				enum: ['Sano', 'Enfermo', 'Vulnerable', 'Castrado', 'Desparasitado', 'Otro'],
-				default: 'Buena'
+				default: 'Sano'
 			}],
 		adopcion: {
 			type: mongoose.Schema.Types.ObjectId,
