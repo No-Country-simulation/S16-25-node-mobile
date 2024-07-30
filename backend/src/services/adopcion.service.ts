@@ -36,10 +36,11 @@ export class AdopcionService {
     }
 
     async delete(id: string) {
-        const adopcion = await AdopcionModel.findByIdAndDelete(id);
+        const adopcion = await AdopcionModel.findById(id);
         if (!adopcion) {
             throw CustomError.notFound('La adopcion no existe');
         }
+        await AdopcionModel.findByIdAndDelete(id);
         await AnimalModel.updateOne({ _id: adopcion.animal },  { adopcion: null });
         await UserModel.updateOne({ _id: adopcion.user },  { $pull: {animales: adopcion.id} });
         return adopcion;

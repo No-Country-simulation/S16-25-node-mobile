@@ -80,12 +80,11 @@ export class RefugioService {
 
 		if (data.image) {
 			const imageUrl = await handleUpload(data.image);
-
 			const tempRefugio = { ...data, image: imageUrl };
-
-			await RefugioModel.updateOne({ id: refugioExists.id }, tempRefugio);
+			await RefugioModel.updateOne({ _id: refugioExists.id }, tempRefugio);
 		} else {
-			await RefugioModel.updateOne({ id: refugioExists.id }, data);
+			const tempRefugio = { ...data, image: refugioExists.image };
+			await RefugioModel.updateOne({ _id: refugioExists.id	} , tempRefugio);
 		}
 
 		const updatedRefugio = await this.getById(refugioExists.id);
@@ -95,6 +94,10 @@ export class RefugioService {
 
 	async delete(id: string) {
 		const refugioExists = await this.getById(id);
+
+		if (!refugioExists) {
+			throw CustomError.notFound('El refugio no existe');
+		}
 
 		await RefugioModel.deleteOne({ id: refugioExists.id });
 	}
