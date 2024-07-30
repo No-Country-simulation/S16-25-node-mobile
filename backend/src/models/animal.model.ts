@@ -11,11 +11,12 @@ export interface Animal extends Document {
 	tamanio: string;
 	sexo: string;
 	estadoSalud: string;
+	adopcion: ObjectId;
 }
 
 export type createAnimalRequest = Pick<
 	Animal,
-	'nombre' | 'especie' | 'edad' | 'peso' | 'estado' | 'raza' | 'tamanio' | 'sexo' | 'estadoSalud'
+	'nombre' | 'especie' | 'edad' | 'peso' | 'estado' | 'raza' | 'tamanio' | 'sexo' | 'estadoSalud' | 'refugio' | 'adopcion'
 > & {
 	image: Express.Multer.File;
 };
@@ -72,7 +73,11 @@ const animalSchema = new mongoose.Schema<Animal>(
 				type: String,
 				enum: ['Sano', 'Enfermo', 'Vulnerable', 'Castrado', 'Desparasitado', 'Otro'],
 				default: 'Buena'
-			}]
+			}],
+		adopcion: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Adopcion'			
+		}
 	},
 	{ timestamps: true }
 );

@@ -69,6 +69,6 @@ export class PostService {
 	async delete(id: string) {
 		const postExists = await this.getById(id);
 
-		await PostModel.deleteOne({ id: postExists.id });
+		await PostModel.deleteOne({ _id: postExists.id });
 	}
 }
