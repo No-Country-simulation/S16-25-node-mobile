@@ -58,9 +58,10 @@ export class PostService {
 
 			const tempPost = { ...data, image: imageUrl };
 
-			await PostModel.updateOne({ id }, tempPost);
+			await PostModel.updateOne({ _id: postExists.id }, tempPost);
 		} else {
-			await PostModel.updateOne({ id }, data);
+			const tempPost = { ...data, image: postExists.image };
+			await PostModel.updateOne({ _id: postExists.id }, tempPost);
 		}
 
 		const updatedPost = await this.getById(postExists.id);

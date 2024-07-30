@@ -45,8 +45,7 @@ export class RefugioController {
 		const { body } = req;
 		body.image = req.file;
 
-		this.refugioService
-			.update(id, body)
+		this.refugioService.update(id, body)
 			.then(refugio => res.status(202).json(refugio))
 			.catch(error => this.handleError(error, res));
 	};
