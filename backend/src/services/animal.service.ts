@@ -48,23 +48,12 @@ export class AnimalService {
 
 		if (data.image) {
 			const imageUrl = await handleUpload(data.image);
-
-			await AnimalModel.findByIdAndUpdate(id, {
-				nombre: data.nombre,
-				especie: data.especie,
-				edad: data.edad,
-				peso: data.peso,
-				image: imageUrl,
-				estado: data.estado
-			});
+			const tempAnimal = { ...data, image: imageUrl };
+			await AnimalModel.findByIdAndUpdate(id, tempAnimal);
 		} else {
-			await AnimalModel.findByIdAndUpdate(id, {
-				nombre: data.nombre,
-				especie: data.especie,
-				edad: data.edad,
-				peso: data.peso,
-				estado: data.estado
-			});
+			const tempAnimal = { ...data, image: animalExists.image };
+			await AnimalModel.findByIdAndUpdate(id, tempAnimal);
+			
 		}
 
 		const animal = await AnimalModel.findById(id);
@@ -79,6 +68,6 @@ export class AnimalService {
 			throw CustomError.notFound('Animal no encontrado');
 		}
 
-		await AnimalModel.deleteOne(findAnimal.id);
+		await AnimalModel.deleteOne({ _id: findAnimal.id });
 	}
 }
