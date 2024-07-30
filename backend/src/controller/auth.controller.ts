@@ -38,7 +38,7 @@ export class AuthController {
 
     getProfile = (req: any, res: Response) => {
         this.authService
-            .getProfile(req.user.id)
+            .getProfile(req.params.id)
             .then(user => res.json(user))
             .catch(error => this.handleError(error, res));
     }
