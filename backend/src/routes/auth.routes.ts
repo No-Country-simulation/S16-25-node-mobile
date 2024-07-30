@@ -29,7 +29,7 @@ export class AuthRoutes {
 			controller.register
 		);
 
-		router.get('/profile', checkToken, controller.getProfile);
+		router.get('/profile/:id', checkToken, controller.getProfile);
 		return router;
 	}
 }
