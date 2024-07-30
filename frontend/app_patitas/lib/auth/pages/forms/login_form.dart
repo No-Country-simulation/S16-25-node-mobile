@@ -44,7 +44,7 @@ class LoginForm extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange),
-                    child: authController.isLoading
+                    child: authController.isLoading.value
                         ? const CircularProgressIndicator()
                         : const Text(
                             'Ingresar',

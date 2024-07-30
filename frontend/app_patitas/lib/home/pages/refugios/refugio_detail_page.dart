@@ -24,9 +24,16 @@ class _RefugioDetailState extends State<RefugioDetail> {
   }
 
   @override
+  void dispose() {
+    refugioController
+        .dispose(); // Asegúrate de limpiar el controlador si es necesario
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4, // Asegúrate de que el número coincida con las pestañas
       child: Scaffold(
         body: SafeArea(
           child: Obx(() {
@@ -44,12 +51,25 @@ class _RefugioDetailState extends State<RefugioDetail> {
                       child: widget.refugio.image != null
                           ? Image.network(
                               widget.refugio.image!,
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover, // Cambiado a BoxFit.cover
                             )
                           : Image.asset(
                               'assets/images/descarga.png',
-                              fit: BoxFit.cover,
+                              fit: BoxFit.cover, // Cambiado a BoxFit.cover
                             ),
+                    ),
+                    // Gradiente oscuro para mejorar la legibilidad
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.black.withOpacity(0.5),
+                            Colors.transparent
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -63,9 +83,9 @@ class _RefugioDetailState extends State<RefugioDetail> {
                               onPressed: () => Navigator.of(context).pop(),
                             ),
                           ),
-                          const Text(
-                            'Refugio Buenos Aires',
-                            style: TextStyle(
+                          Text(
+                            widget.refugio.nombre ?? 'Nombre del Refugio',
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 24.0,
                               fontWeight: FontWeight.bold,
@@ -73,7 +93,6 @@ class _RefugioDetailState extends State<RefugioDetail> {
                           ),
                           const SizedBox(height: 16.0),
                           Container(
-                            width: 400,
                             margin: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24.0),
@@ -91,6 +110,7 @@ class _RefugioDetailState extends State<RefugioDetail> {
                                 Tab(text: 'Mascotas'),
                                 Tab(text: 'Publicaciones'),
                                 Tab(text: 'Información'),
+                                Tab(text: 'Donar'),
                               ],
                             ),
                           ),
@@ -112,7 +132,8 @@ class _RefugioDetailState extends State<RefugioDetail> {
                       RefugioPublicacionPage(
                           publicaciones: dataRefugio.publicaciones,
                           refugio: widget.refugio),
-                      const InformacionTab(),
+                      const InformacionTab(), // Asegúrate de tener la implementación correcta
+                      const DonarTab(), // Nueva pestaña de "Donar"
                     ],
                   ),
                 ),
@@ -179,29 +200,106 @@ class MascotasTab extends StatelessWidget {
   }
 }
 
-class PublicacionesTab extends StatelessWidget {
-  const PublicacionesTab({super.key});
+class InformacionTab extends StatelessWidget {
+  const InformacionTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Información'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange, // Color del botón
+                        foregroundColor: Colors.white),
+                    onPressed: () {},
+                    child: const Text('Contactar'),
+                  ),
+                ],
+              ),
+              const Section(
+                title: 'Historia',
+                content:
+                    'ONG, sin fines de lucro. Estamos inscriptos, como Asociación Civil, REFUGIO EL CAMPITO personeria juridica nº 6971, Ruta16 Parcela 501 E Monte Grande, Partido de Esteban Echeverría, zona sur del Gran Buenos Aires, en Argentina.',
+                showButton: true,
+              ),
+              const SizedBox(height: 16.0),
+              const Section(
+                title: 'Misión',
+                content:
+                    'El Campito Refugio es una ONG, sin fines de lucro. Estamos inscriptos, como Asociación Civil, REFUGIO EL CAMPITO personeria juridica nº 6971, Ruta16 Parcela 501 E Monte Grande, Partido de Esteban Echeverría, zona sur del Gran Buenos Aires, en Argentina.',
+              ),
+              const SizedBox(height: 16.0),
+              const Section(
+                title: 'Visión',
+                content:
+                    'El Campito Refugio es una ONG, sin fines de lucro. Estamos inscriptos, como Asociación Civil, REFUGIO EL CAMPITO personeria juridica nº 6971, Ruta16 Parcela 501 E Monte Grande, Partido de Esteban Echeverría, zona sur del Gran Buenos Aires, en Argentina.',
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DonarTab extends StatelessWidget {
+  const DonarTab({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
-        'Publicaciones',
+        'Donar',
         style: TextStyle(fontSize: 24.0),
       ),
     );
   }
 }
 
-class InformacionTab extends StatelessWidget {
-  const InformacionTab({super.key});
+class Section extends StatelessWidget {
+  final String title;
+  final String content;
+  final bool showButton;
+
+  const Section({
+    required this.title,
+    required this.content,
+    this.showButton = false,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Información',
-        style: TextStyle(fontSize: 24.0),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.blue, width: 2.0),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8.0),
+          Text(
+            content,
+            style: const TextStyle(fontSize: 16.0),
+          ),
+        ],
       ),
     );
   }
