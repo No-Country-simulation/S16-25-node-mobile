@@ -34,12 +34,14 @@ export class PostService {
 		const newPost = new PostModel(tempPost);
 
 		await newPost.save();
+		
+		await RefugioModel.updateOne({ _id: data.refugio }, { $push: { publicaciones: newPost.id } });
 
 		return newPost;
 	}
 
 	async getById(id: string) {
-		const postExists = await RefugioModel.findById(id);
+		const postExists = await PostModel.findById(id);
 
 		if (!postExists) {
 			throw CustomError.notFound('La publicación no existe');
@@ -68,7 +70,7 @@ export class PostService {
 
 	async delete(id: string) {
 		const postExists = await this.getById(id);
-
+		await RefugioModel.updateOne({ _id: postExists.refugio }, { $pull: { publicaciones: postExists.id } });
 		await PostModel.deleteOne({ _id: postExists.id });
 	}
 }
