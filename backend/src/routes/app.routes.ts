@@ -5,6 +5,7 @@ import { RatingRouter } from './rating.routes';
 import { RefugioRouter } from './refugio.routes';
 import { UserRouter } from './user.routes';
 import { AuthRoutes } from './auth.routes';
+import { AdopcionRoutes } from './adopcion.routes';
 
 export class AppRoutes {
 	static get routes(): Router {
@@ -33,6 +34,7 @@ export class AppRoutes {
 		router.use('/refugio', RefugioRouter.routes);
 		router.use('/user', UserRouter.routes);
 		router.use('/auth', AuthRoutes.routes);
+		router.use('/adopt', AdopcionRoutes.routes);
 
 		return router;
 	}
