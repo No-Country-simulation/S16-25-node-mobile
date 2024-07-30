@@ -39,7 +39,7 @@ export class AuthService {
         return { message: 'Usuario registrado correctamente' };
     }
 
-    async login(email: string, password: string ): Promise<{ token: string , rol: string}> {
+    async login(email: string, password: string ): Promise<{ token: string , rol: string, id: string }> {
         const user = await UserModel.findOne({ email });
         if (!user) {
             throw CustomError.badRequest('El usuario no existe');
@@ -52,7 +52,7 @@ export class AuthService {
 
         const token = jwt.sign({id:user.id, email: user.email, rol: user.rol }, JWT_SECRET, { expiresIn: '1h' });
 
-        return { token, rol: user.rol };
+        return { token, rol: user.rol, id: user.id };
     }
 
     async getProfile(id: string) {
