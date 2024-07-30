@@ -8,11 +8,12 @@ interface Refugio extends Document {
 	gerente: ObjectId;
 	animales: ObjectId[];
 	publicaciones: ObjectId[];
+	informacion: string;
 }
 
 export type RefugioRequest = Pick<
 	Refugio,
-	'nombre' | 'correo' | 'telefono' | 'gerente'
+	'nombre' | 'correo' | 'telefono' | 'gerente' | 'informacion'
 > & { image: Express.Multer.File };
 
 export type UpdateRefugioRequest = Partial<RefugioRequest>;
@@ -53,7 +54,10 @@ const refugioSchema = new mongoose.Schema<Refugio>(
 				type: mongoose.Schema.Types.ObjectId,
 				ref: 'Publicacion'
 			}
-		]
+		],
+		informacion: {
+			type: String
+		}
 	},
 	{ timestamps: true }
 );

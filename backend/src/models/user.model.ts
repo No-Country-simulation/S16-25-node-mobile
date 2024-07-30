@@ -25,7 +25,7 @@ export interface User extends Document {
 // Defino el tipo UserRequest para manejar las solicitudes HTTP y no tener problemas con la imagen de perfil
 export type UserRequest = Pick<
     User,
-    'nombre' | 'fechaDeNacimiento' | 'rol' | 'telefono' | 'email' | 'password' | 'poseeAnimales' | 'conviveMenores' | 'patio' | 'dimensiones' | 'direccion' | 'token'
+    'nombre' | 'fechaDeNacimiento' | 'rol' | 'telefono' | 'email' | 'password' | 'poseeAnimales' | 'conviveMenores' | 'patio' | 'dimensiones' | 'direccion' | 'token' | 'animales' | 'donaciones' | 'denuncias' | 'calificaciones'
 > & {
     image: Express.Multer.File;
 };

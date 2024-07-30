@@ -1,13 +1,15 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
+import { Document } from "mongoose";
 
-export interface Adopcion {
-    animal: string;
-    user: string;
+export interface Adopcion extends Document {
+    animal: ObjectId;
+    user: ObjectId;
     estado: string;
 }
 
 export type createAdopcionRequest = Pick<Adopcion, "animal" | "user" | "estado">;
 
+export type updateAdopcionRequest = Partial<createAdopcionRequest>;
 
 const adopcionSchema = new mongoose.Schema({
     animal: {
@@ -20,7 +22,8 @@ const adopcionSchema = new mongoose.Schema({
     },
     estado: {
         type: String,
-        enum: ['Pendiente', 'Aceptada', 'Rechazada'],
+        enum: ['En proceso', 'Aceptada', 'Rechazada'],
+        default: 'En proceso'
     }
 },
     {
@@ -37,4 +40,4 @@ adopcionSchema.set("toJSON", {
     },
 });
 
-export default mongoose.model<Adopcion>("Adopcion", adopcionSchema)
+export const AdopcionModel = mongoose.model("Adopcion", adopcionSchema);
