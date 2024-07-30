@@ -53,6 +53,10 @@ export class PostService {
 	async update(id: string, data: UpdatePostRequest) {
 		const postExists = await this.getById(id);
 
+		if (!postExists) {
+			throw CustomError.notFound('La publicación no existe');
+		}
+
 		if (data.image) {
 			const imageUrl = await handleUpload(data.image);
 
