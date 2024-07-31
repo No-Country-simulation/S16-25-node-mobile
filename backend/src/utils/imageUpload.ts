@@ -8,7 +8,6 @@ export const handleUpload = async (
 	if (!image) {
 		throw CustomError.badRequest('No se ingreso una imagen');
 	}
-	console.log(image)
 	
 	const local = `${image.destination}/${image.filename}`;
 

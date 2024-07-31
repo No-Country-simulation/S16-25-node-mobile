@@ -200,6 +200,7 @@ export const registerUserValidator = [
 	/*  */body('rol')
 		/* .notEmpty()
 		.withMessage('El campo rol no puede estar vacío') */
+		.optional()
 		.isIn(['User'])
 		.withMessage(
 			'El campo rol debe ser User'
