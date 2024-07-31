@@ -5,10 +5,11 @@ import { unlink } from 'fs/promises';
 export const handleUpload = async (
 	image: Express.Multer.File
 ): Promise<String> => {
-	if (!image) {
+	/* if (!image) {
 		throw CustomError.badRequest('No se ingreso una imagen');
-	}
-
+	} */
+	console.log(image)
+	
 	const local = `${image.destination}/${image.filename}`;
 
 	const res = await cloudinary.uploader.upload(image.path);
