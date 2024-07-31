@@ -31,7 +31,7 @@ export class AdopcionService {
     }
 
     async update(id: string, data: updateAdopcionRequest) {
-        const adopcion = await AdopcionModel.findByIdAndUpdate(id, data);
+        const adopcion = await AdopcionModel.findByIdAndUpdate({_id:id}, data);
         return adopcion;
     }
 
