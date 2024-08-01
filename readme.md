@@ -1,10 +1,13 @@
 S16-25-node-mobile
-![image](https://github.com/user-attachments/assets/8751576b-efba-4076-9781-3a28dbdab27e)
 
 NOMBRE:
 
 
 PatitasEnRed
+
+![image](https://github.com/user-attachments/assets/8751576b-efba-4076-9781-3a28dbdab27e)
+
+
 
 
 ℹ️️️ Información del Producto
