@@ -55,7 +55,7 @@ Gerentes:
 🛠️ Herramientas de Desarrollo, Gestión y Diseño:
 
 - Frontend: Flutter y sus librerías para la aplicación móvil.
-- Backend: Usamos Node con la librería de Express y Mongo DB para la gestión de la base de datos, Json Web Token para la autenticación y seguridad, Cloudinary para subir imágenes en la nube.
+- Backend: Usamos Node con la librería de Express y Mongo DB para la gestión de la base de datos, Json Web Token para la autenticación y seguridad, Cloudinary para subir imágenes en la nube, se deployó la aplicación en Render.
 - QA: Trello: herramienta de gestión de proyectos basada en tableros, Freemind: para la elaboración del mapa mental de la aplicación, Googlesheets: para el registro primario de las épicas, historias de usuario y casos de prueba, Test Monitor para el registro del Proyecto.
 - UX/UI: Figma: herramienta de diseño de interfaz de usuario y prototipado colaborativo basada en la nube, para el diseño de las pantallas y botones de la aplicación.
 
