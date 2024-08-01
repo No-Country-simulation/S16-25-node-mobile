@@ -57,7 +57,8 @@ _Registra un nuevo usuario._
 {
   "nombre": "Nombre del Usuario",
   "email": "usuario@example.com",
-  "password": "tu-contraseña"
+  "password": "tu-contraseña",
+  "documento":"numero-documento"
 }
 ```
 
@@ -327,10 +328,10 @@ _Crea un nuevo animal disponible para adopción._
 ```json
 {
   "nombre": "Nombre del Animal requerido ",
-  "especie": "Especie del Animal- Perro por defecto",
+  "especie": 'Perro'(por defecto), 'Gato', 'Reptil', 'Ave' o 'Otros',
   "edad": 3 requerido ,
   "peso": 15 requerido ,
-  "image": "url-de-la-imagen",
+  "image": archivo File,
   "estado": "Activo por defecto",
   "refugio": "id-del-refugio-requerido",
    "raza": "raza del animal";
@@ -338,7 +339,7 @@ _Crea un nuevo animal disponible para adopción._
 	"sexo": "Macho"(por defecto) o "Hembra";
 	"estadoSalud": 'Sano'(por defecto), 'Enfermo', 'Vulnerable', 'Castrado', 'Desparasitado'o 'Otro';
 	"adopcion": "id-adopcion-no-requerido";
-  
+
 }
 ```
 
@@ -548,7 +549,7 @@ _Elimina una publicación específica._
   "message": "Publicación eliminada"
 }
 ```
-### 6. Adopciones (desarrollando documentación )
+### 6. Adopciones
 
 #### **GET** `/adopt/`
 
@@ -557,32 +558,120 @@ _Obtiene una lista de todas las adopciones._
 **Respuesta Exitosa:**
 
 ```json
+{"total":"N",
+"adopciones":
 [
   {
-    "id": "ratingId",
-    "rate": 5,
-    "texto": "Comentario sobre el refugio",
-    "user": "id-del-usuario",
-    "refugio": "id-del-refugio"
+    "animal": {
+        "tamanio": "Mediano",
+        "sexo": "Macho",
+        "estadoSalud": [],
+        "nombre": "pepito",
+        "especie": "Ave",
+        "edad": 2,
+        "peso": 1,
+        "image": "https://res.cloudinary.com/dcp2ljagc/image/upload/v1721364291/c9hmkg2ieyrebwamlzry.webp",
+        "estado": "Activo",
+        "createdAt": "2024-07-19T04:44:52.196Z",
+        "updatedAt": "2024-07-30T21:21:56.470Z",
+        "adopcion": "66a88829431e461b3d54b0f9",
+        "id": "6699ef449f5a5a1507262f5d"
+      },
+      "user": {
+        "nombre": "Erick Cole",
+        "rol": "User",
+        "telefono": 856749652,
+        "email": "Deonte_Hoeger@yahoo.com",
+        "password": "$2a$10$u3DwgnHmHX2x/cETyxYeXevgbvF/6jc9zOh6yDvHREphRn.ib2Rly",
+        "tipoDocumento": "DNI",
+        "documento": 93534160,
+        "poseeAnimales": false,
+        "conviveMenores": false,
+        "patio": false,
+        "dimensiones": 0,
+        "direccion": "Orval Vista",
+        "imagenPerfil": "https://res.cloudinary.com/dmof364iw/image/upload/v1721928969/adhfzokkjqjjhon78dqn.jpg",
+        "animales": [
+          "66a88829431e461b3d54b0f9"
+        ],
+        "donaciones": [],
+        "denuncias": [],
+        "calificaciones": [],
+        "createdAt": "2024-07-25T17:36:08.689Z",
+        "updatedAt": "2024-07-30T06:28:58.123Z",
+        "id": "66a28d08a1dcd1c1f714a001"
+      },
+      "estado": "En proceso",
+      "createdAt": "2024-07-30T06:28:58.002Z",
+      "updatedAt": "2024-07-30T06:28:58.002Z",
+      "id": "66a88829431e461b3d54b0f9"
   },
   ...
-]
+]}
+```
+#### **GET** `/adopt/:id`
+
+_Obtiene los detalles de una adopcion especifica por id._
+
+**Respuesta Exitosa:**
+
+```json
+{"animal": {
+    "tamanio": "Mediano",
+    "sexo": "Macho",
+    "estadoSalud": [],
+    "nombre": "pepito",
+    "especie": "Ave",
+    "edad": 2,
+    "peso": 1,
+    "image": "https://res.cloudinary.com/dcp2ljagc/image/upload/v1721364291/c9hmkg2ieyrebwamlzry.webp",
+    "estado": "Activo",
+    "createdAt": "2024-07-19T04:44:52.196Z",
+    "updatedAt": "2024-07-30T21:21:56.470Z",
+    "adopcion": "66a88829431e461b3d54b0f9",
+    "id": "6699ef449f5a5a1507262f5d"
+  },
+  "user": {
+    "nombre": "Erick Cole",
+    "rol": "User",
+    "telefono": 856749652,
+    "email": "Deonte_Hoeger@yahoo.com",
+    "password": "$2a$10$u3DwgnHmHX2x/cETyxYeXevgbvF/6jc9zOh6yDvHREphRn.ib2Rly",
+    "tipoDocumento": "DNI",
+    "documento": 93534160,
+    "poseeAnimales": false,
+    "conviveMenores": false,
+    "patio": false,
+    "dimensiones": 0,
+    "direccion": "Orval Vista",
+    "imagenPerfil": "https://res.cloudinary.com/dmof364iw/image/upload/v1721928969/adhfzokkjqjjhon78dqn.jpg",
+    "animales": [
+      "66a88829431e461b3d54b0f9"
+    ],
+    "donaciones": [],
+    "denuncias": [],
+    "calificaciones": [],
+    "createdAt": "2024-07-25T17:36:08.689Z",
+    "updatedAt": "2024-07-30T06:28:58.123Z",
+    "id": "66a28d08a1dcd1c1f714a001"
+  },
+  "estado": "En proceso",
+  "id": "66a88829431e461b3d54b0f9"}
 ```
 
-#### **POST** `/rating/`
+#### **POST** `/adopt/`
 
-_Crea una nueva calificación._
+_Crea una nueva Adopcion._
 
-**Requiere:** Token de autenticación
+**Requiere:** Token de autenticación(por el momento no se requiere)
 
 **Parámetros de Entrada:**
 
 ```json
 {
-  "rate": 5,
-  "texto": "Comentario sobre el refugio",
-  "user": "id-del-usuario",
-  "refugio": "id-del-refugio"
+  "user": "id-user"(requerido),
+  "animal": "id-animal"(requerido),
+  "estado":['En proceso'(por defecto), 'Aceptada'o 'Rechazada']
 }
 ```
 
@@ -590,38 +679,22 @@ _Crea una nueva calificación._
 
 ```json
 {
-  "message": "Calificación creada exitosamente"
+  <Objeto creado>
 }
 ```
 
-#### **GET** `/rating/:id`
+#### **PUT** `/adopt/:id`
 
-_Obtiene los detalles de una calificación específica._
+_Actualiza los detalles de una adopción específica._
 
-**Respuesta Exitosa:**
-
-```json
-{
-  "id": "ratingId",
-  "rate": 5,
-  "texto": "Comentario sobre el refugio",
-  "user": "id-del-usuario",
-  "refugio": "id-del-refugio"
-}
-```
-
-#### **PUT** `/rating/:id`
-
-_Actualiza los detalles de una calificación específica._
-
-**Requiere:** Token de autenticación
+**Requiere:** Token de autenticación(por el momento no es necesario)
 
 **Parámetros de Entrada:**
 
 ```json
 {
-  "rate": 4,
-  "texto": "Nuevo comentario sobre el refugio"
+  "estado": "Aceptada",
+  
 }
 ```
 
@@ -629,21 +702,26 @@ _Actualiza los detalles de una calificación específica._
 
 ```json
 {
-  "message": "Calificación actualizada exitosamente"
+  "animal": "id-animal",
+  "user": "id-user",
+  "estado": "Aceptada"(cambio de estado),
+  "createdAt": "2024-07-30T06:28:58.002Z",
+  "updatedAt": "2024-07-31T01:38:44.877Z",
+  "id": "id-adopcion"
 }
 ```
 
-#### **DELETE** `/rating/:id`
+#### **DELETE** `/adopt/:id`
 
-_Elimina una calificación específica._
+_Elimina una adopción específica._
 
-**Requiere:** Token de autenticación
+**Requiere:** Token de autenticación(no aplica por el momento)
 
 **Respuesta Exitosa:**
 
 ```json
 {
-  "message": "Calificación eliminada exitosamente"
+  "message": "Adopción eliminada"
 }
 ```
 ### 7. Calificaciones (en desarrollo no testear)

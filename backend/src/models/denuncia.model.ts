@@ -13,7 +13,7 @@ export interface Denuncia extends Document {
 //Exporto la definicion del tipo DenunciaRequest para usar en las peticiones HTTP y no tener problemas con las imagenes
 export type DenunciaRequest = Pick<
     Denuncia,
-    'titulo' | 'texto' | 'labels' | 'fechaDenuncia' | 'estado' | 'usuario'
+    'titulo' | 'texto' | 'labels' | 'fechaDenuncia' | 'estado' | 'usuario' 
 > & {
     image: Express.Multer.File[];
 };

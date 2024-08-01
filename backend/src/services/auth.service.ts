@@ -4,6 +4,7 @@ import { envs } from "../config/envs";
 import { User, UserModel } from "../models/user.model";
 import { CustomError } from "../utils/custom.error";
 import { handleUpload } from "../utils/imageUpload";
+import { RefugioModel } from "../models/refugio.model";
 
 const JWT_SECRET = envs.JWT_SEED;
 
@@ -39,10 +40,23 @@ export class AuthService {
         return { message: 'Usuario registrado correctamente' };
     }
 
-    async login(email: string, password: string ): Promise<{ token: string , rol: string, id: string }> {
+    async login(email: string, password: string ): Promise<{ token: string , rol: string, id: string, refugio: string }> {
         const user = await UserModel.findOne({ email });
         if (!user) {
             throw CustomError.badRequest('El usuario no existe');
+        }
+        const refugio = await RefugioModel.findOne({ gerente: user.id });
+
+        if (!refugio) {
+            const refugio = "No tiene refugio";
+            const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            throw CustomError.badRequest('Contraseña incorrecta');
+        }
+
+        const token = jwt.sign({id:user.id, email: user.email, rol: user.rol }, JWT_SECRET/* , { expiresIn: '1h' } */);
+            return { token, rol: user.rol, id: user.id, refugio };
+
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
@@ -50,13 +64,13 @@ export class AuthService {
             throw CustomError.badRequest('Contraseña incorrecta');
         }
 
-        const token = jwt.sign({id:user.id, email: user.email, rol: user.rol }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({id:user.id, email: user.email, rol: user.rol }, JWT_SECRET/* , { expiresIn: '1h' } */);
 
-        return { token, rol: user.rol, id: user.id };
+        return { token, rol: user.rol, id: user.id, refugio: refugio.id};
     }
 
     async getProfile(id: string) {
-        const user = await UserModel.findById(id).select('-password -token -createdAt -updatedAt -__v');
+        const user = await UserModel.findById(id).select('-password -token -createdAt -updatedAt -__v').populate('animales');
         if (!user) {
             throw CustomError.notFound('El usuario no existe');
         }
