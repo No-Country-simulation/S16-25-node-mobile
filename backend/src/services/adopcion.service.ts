@@ -25,8 +25,15 @@ export class AdopcionService {
     async create(data: createAdopcionRequest) {
         const adopcion = new AdopcionModel(data);
         await adopcion.save();
+
         await AnimalModel.updateOne({ _id: data.animal },  { adopcion: adopcion.id });
-        await UserModel.updateOne({ _id: data.user },  { $push: {animales: adopcion.id} });
+
+        const animal = await AnimalModel.findById(data.animal);
+        if (!animal) {
+            throw CustomError.notFound('El animal no existe');            
+        }
+        
+        await UserModel.updateOne({ _id: data.user },  { $push: {animales: animal.id} });
         return adopcion;
     }
 
