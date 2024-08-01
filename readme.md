@@ -5,7 +5,8 @@ NOMBRE:
 
 PatitasEnRed
 
-                                            [image](https://github.com/user-attachments/assets/8751576b-efba-4076-9781-3a28dbdab27e)
+                                            ![image](https://github.com/user-attachments/assets/5eed330d-5a07-4c58-8e99-d3dafc0bf922)
+
 
 
 
