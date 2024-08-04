@@ -72,4 +72,4 @@ Frontend	             Edwin Fajardo     https://www.linkedin.com/in/edwin-fajard
 
 Backend	             Luis Barrantes    https://www.linkedin.com/in/luis-alfredo-barrantes/ https://github.com/LuiyiBarrantes
 
-Backend	             Martín Palomino  https://www.linkedin.com/in/martinchris-palomino/ https://github.com/MarkpherDev
+Backend	             Martín Palomino  https://www.linkedin.com/in/martinchris-palomino/ https://github.com/martinpc-dev
